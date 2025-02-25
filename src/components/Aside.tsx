@@ -20,7 +20,6 @@ import { grey } from "@mui/material/colors";
 import { Box } from "@mui/material";
 export const Aside = () => {
   const navigate = useNavigate();
-  const handlerGoHome = () => navigate("/");
   const handleAlignment = () => console.log("booo");
   const asideItem = {
     display: "flex",
@@ -40,12 +39,14 @@ export const Aside = () => {
         }}
       >
         <Box
+          onClick={() => navigate("/")}
           value="logo"
           aria-label="logo"
           sx={{
             display: "flex",
             justifyContent: "flex-start",
             alignItems: "center",
+            cursor: "pointer",
           }}
         >
           <IconButton>
@@ -67,7 +68,7 @@ export const Aside = () => {
             aria-label="logo"
             sx={{ width: "100%" }}
           >
-            <IconButton sx={asideItem}>
+            <IconButton sx={asideItem} onClick={() => navigate("/instagram")}>
               <InstagramIcon />
               <Typography>Instagram</Typography>
             </IconButton>
@@ -77,7 +78,7 @@ export const Aside = () => {
             aria-label="logo"
             sx={{ width: "100%" }}
           >
-            <IconButton sx={asideItem}>
+            <IconButton sx={asideItem} onClick={() => navigate("/twitter")}>
               <XIcon />
               <Typography>Twitter</Typography>
             </IconButton>
@@ -87,7 +88,7 @@ export const Aside = () => {
             aria-label="logo"
             sx={{ width: "100%" }}
           >
-            <IconButton sx={asideItem}>
+            <IconButton sx={asideItem} onClick={() => navigate("/facebook")}>
               <FacebookIcon />
               <Typography>Facebook</Typography>
             </IconButton>
@@ -97,7 +98,7 @@ export const Aside = () => {
             aria-label="logo"
             sx={{ width: "100%" }}
           >
-            <IconButton sx={asideItem}>
+            <IconButton sx={asideItem} onClick={() => navigate("/youtube")}>
               <YouTubeIcon />
               <Typography>Youtube</Typography>
             </IconButton>
@@ -110,7 +111,7 @@ export const Aside = () => {
             aria-label="logo"
             sx={{ width: "100%" }}
           >
-            <IconButton sx={asideItem}>
+            <IconButton sx={asideItem} onClick={() => navigate("/statistic")}>
               <EqualizerIcon />
               <Typography>Statistics</Typography>
             </IconButton>
@@ -120,7 +121,7 @@ export const Aside = () => {
             aria-label="logo"
             sx={{ width: "100%" }}
           >
-            <IconButton sx={asideItem}>
+            <IconButton sx={asideItem} onClick={() => navigate("/dashboard")}>
               <SpaceDashboardIcon />
               <Typography>Dashboard</Typography>
             </IconButton>
@@ -130,7 +131,7 @@ export const Aside = () => {
             aria-label="logo"
             sx={{ width: "100%" }}
           >
-            <IconButton sx={asideItem}>
+            <IconButton sx={asideItem} onClick={() => navigate("/documents")}>
               <SourceIcon />
               <Typography>Documents</Typography>
             </IconButton>
@@ -143,13 +144,13 @@ export const Aside = () => {
             aria-label="logo"
             sx={{ width: "100%" }}
           >
-            <IconButton sx={asideItem}>
+            <IconButton sx={asideItem} onClick={() => navigate("/settings")}>
               <TuneIcon />
               <Typography>Settings</Typography>
             </IconButton>
           </ToggleButton>
           <ToggleButton value="logout" aria-label="logo" sx={{ width: "100%" }}>
-            <IconButton sx={asideItem}>
+            <IconButton sx={asideItem} onClick={() => navigate("/log")}>
               <LogoutIcon />
               <Typography>Log Out</Typography>
             </IconButton>
