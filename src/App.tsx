@@ -16,7 +16,10 @@ const theme = createTheme({
     },
     text: {
       primary: "#e5e7eb", // light-grey
+      textTransform: "capitalize",
+      secondary: "rgba(255, 255, 240, 0.3)",
     },
+    divider: "rgba(255, 255, 240, 0.3)",
   },
   typography: {
     h1: {
@@ -24,11 +27,12 @@ const theme = createTheme({
       fontSize: "2rem",
     },
     h3: {
-      textTransform: "uppercase",
+      textTransform: "capitalize",
       fontSize: "1rem",
     },
     body1: {
       color: "#e5e7eb", // light-grey
+      textTransform: "capitalize",
     },
   },
 });

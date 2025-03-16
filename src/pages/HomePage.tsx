@@ -10,7 +10,7 @@ export const HomePage = () => {
           padding: "20px",
           height: "100px",
           width: "100px",
-          backgroundColor: "primary.main",
+          backgroundColor: "error",
         }}
       />
     </div>

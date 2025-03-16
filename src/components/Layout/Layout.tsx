@@ -5,10 +5,7 @@ import { Aside } from "../Aside";
 export const Layout = () => {
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
-      {/* Лівий блок - Aside (меню) */}
       <Aside />
-
-      {/* Правий блок - Контент сторінок */}
       <Box sx={{ flexGrow: 1, padding: 5 }}>
         <Outlet />
       </Box>
