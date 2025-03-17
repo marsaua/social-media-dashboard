@@ -1,4 +1,7 @@
-import { Card, Box, Typography } from "@mui/material";
+import Card from "@mui/material/Card";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+
 import { formatAmount } from "../../store/helpers";
 
 export const WeekSatisticCard = ({ card }) => {

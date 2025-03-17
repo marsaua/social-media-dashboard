@@ -1,4 +1,7 @@
-import { ToggleButtonGroup, ToggleButton, Typography } from "@mui/material";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import ToggleButton from "@mui/material/ToggleButton";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Logo } from "../../public/icons/Logo";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -11,7 +14,6 @@ import SourceIcon from "@mui/icons-material/Source";
 import TuneIcon from "@mui/icons-material/Tune";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { grey } from "@mui/material/colors";
-import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export const Aside = () => {

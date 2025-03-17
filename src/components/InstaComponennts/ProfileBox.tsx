@@ -1,6 +1,6 @@
-import { Typography } from "@mui/material";
-import { Avatar } from "@mui/material";
-import { Box } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
 
 export const ProfileBox = () => {
   return (

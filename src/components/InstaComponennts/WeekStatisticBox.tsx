@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import { weekStatisticData } from "../../store/useWeekStatistic";
 import { WeekSatisticCard } from "./WeekStatisticCard";
 

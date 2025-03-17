@@ -1,7 +1,7 @@
 import { WeekStatisticBox } from "../components/InstaComponennts/WeekStatisticBox";
 import { ProfileBox } from "../components/InstaComponennts/ProfileBox";
 import { GalleryBox } from "../components/InstaComponennts/GalleryBox";
-import { Stack } from "@mui/material";
+import Stack from "@mui/material/Stack";
 import { AboutInsta } from "../components/InstaComponennts/AboutInsta";
 
 export const InstagramPage = () => {
