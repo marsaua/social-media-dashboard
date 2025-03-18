@@ -3,8 +3,11 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 import { formatAmount } from "../../store/helpers";
+import { StatisticCardT } from "../../helpers/types";
 
-export const WeekSatisticCard = ({ card }) => {
+type Props= {card: StatisticCardT}
+
+export const WeekSatisticCard:React.FC<Props> = ({ card }) => {
   const { icon, amount, name } = card;
   return (
     <Card
@@ -19,13 +22,12 @@ export const WeekSatisticCard = ({ card }) => {
       }}
     >
       <Box
-        sx={(theme) => ({
+        sx={() => ({
           width: "60px",
           height: "60px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: theme.palette.background.light_grey,
           borderRadius: "100%",
         })}
       >

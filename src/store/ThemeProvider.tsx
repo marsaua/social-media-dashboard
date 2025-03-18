@@ -1,17 +1,24 @@
 import { createContext, useContext, useState, useMemo } from "react";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { PaletteMode, ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
+type Props = {
+  children: JSX.Element
+}
+export type ThemeContextType = {
+  themeMode: PaletteMode;
+  toggleTheme: () => void;
+};
 
-const ThemeContext = createContext("dark");
+const ThemeContext = createContext<ThemeContextType | null>(null);
 
 export function useTheme() {
-  return useContext(ThemeContext);
-}
+  const context = useContext(ThemeContext);
+  return context ?? { themeMode: "dark", toggleTheme: () => {} };}
 
-export function ThemeProviderWrapper({ children }) {
-  const storedTheme = localStorage.getItem("theme") || "dark";
-  const [themeMode, setThemeMode] = useState(storedTheme);
+export function ThemeProviderWrapper({ children }: Props) {
+  const storedTheme = (localStorage.getItem("theme") as PaletteMode )|| "dark";
+  const [themeMode, setThemeMode] = useState<PaletteMode>(storedTheme);
 
   const toggleTheme = () => {
     const newTheme = themeMode === "dark" ? "light" : "dark";
