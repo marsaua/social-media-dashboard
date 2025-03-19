@@ -30,6 +30,7 @@ export const Aside = () => {
     gap: "10px",
     width: "100%",
     textDecoration: "normal",
+    border: "none",
   };
   useEffect(() => {
     if (location) {

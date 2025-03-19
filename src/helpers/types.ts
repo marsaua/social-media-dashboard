@@ -1,5 +1,5 @@
 export type StatisticCardT = {
-    icon: string;
-    amount: number;
-    name: string;
-}
+  icon: string;
+  amount: number;
+  name: string;
+};

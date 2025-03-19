@@ -5,9 +5,9 @@ import Typography from "@mui/material/Typography";
 import { formatAmount } from "../../store/helpers";
 import { StatisticCardT } from "../../helpers/types";
 
-type Props= {card: StatisticCardT}
+type Props = { card: StatisticCardT };
 
-export const WeekSatisticCard:React.FC<Props> = ({ card }) => {
+export const WeekSatisticCard: React.FC<Props> = ({ card }) => {
   const { icon, amount, name } = card;
   return (
     <Card

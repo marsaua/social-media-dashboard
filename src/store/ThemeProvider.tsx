@@ -3,8 +3,8 @@ import { PaletteMode, ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
 type Props = {
-  children: JSX.Element
-}
+  children: JSX.Element;
+};
 export type ThemeContextType = {
   themeMode: PaletteMode;
   toggleTheme: () => void;
@@ -14,10 +14,11 @@ const ThemeContext = createContext<ThemeContextType | null>(null);
 
 export function useTheme() {
   const context = useContext(ThemeContext);
-  return context ?? { themeMode: "dark", toggleTheme: () => {} };}
+  return context ?? { themeMode: "dark", toggleTheme: () => {} };
+}
 
 export function ThemeProviderWrapper({ children }: Props) {
-  const storedTheme = (localStorage.getItem("theme") as PaletteMode )|| "dark";
+  const storedTheme = (localStorage.getItem("theme") as PaletteMode) || "dark";
   const [themeMode, setThemeMode] = useState<PaletteMode>(storedTheme);
 
   const toggleTheme = () => {
@@ -59,7 +60,7 @@ export function ThemeProviderWrapper({ children }: Props) {
           },
         },
       }),
-    [themeMode]
+    [themeMode],
   );
 
   return (
