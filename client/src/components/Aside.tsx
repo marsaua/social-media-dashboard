@@ -3,7 +3,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Logo } from "../../public/icons/Logo";
+import { Logo } from "client/public/icons/Logo.tsx";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import XIcon from "@mui/icons-material/X";
 import FacebookIcon from "@mui/icons-material/Facebook";

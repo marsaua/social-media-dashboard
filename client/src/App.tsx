@@ -1,5 +1,5 @@
-import { AppRouters } from "./AppRouters";
-import { ThemeProviderWrapper } from "./store/ThemeProvider";
+import { AppRouters } from "./AppRouters.tsx";
+import { ThemeProviderWrapper } from "./store/ThemeProvider.tsx";
 
 function App() {
   return (

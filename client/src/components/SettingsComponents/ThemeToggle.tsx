@@ -1,7 +1,7 @@
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
-import { ThemeContextType, useTheme } from "../../store/ThemeProvider";
+import { ThemeContextType, useTheme } from "client/src/store/ThemeProvider.tsx";
 
 export const ThemeToggle = () => {
   const { themeMode, toggleTheme }: ThemeContextType = useTheme();

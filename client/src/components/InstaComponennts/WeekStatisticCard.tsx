@@ -2,8 +2,8 @@ import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { formatAmount } from "../../store/helpers";
-import { StatisticCardT } from "../../helpers/types";
+import { formatAmount } from "client/src/store/helpers.ts";
+import { StatisticCardT } from "client/src/helpers/types.ts";
 
 type Props = { card: StatisticCardT };
 
