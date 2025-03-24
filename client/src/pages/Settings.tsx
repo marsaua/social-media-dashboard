@@ -1,4 +1,4 @@
-import { ThemeToggle } from "client/src/components/SettingsComponents/ThemeToggle.tsx";
+import { ThemeToggle } from "@/components/SettingsComponents/ThemeToggle.tsx";
 
 export const SettingsPage = () => {
   return (

@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import { Outlet } from "react-router-dom";
-import { Aside } from "client/src/components/Aside.tsx";
+import { Aside } from "@/components/Aside.tsx";
 
 export const Layout = () => {
   return (

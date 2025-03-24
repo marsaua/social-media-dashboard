@@ -1,16 +1,16 @@
-import "client/src/reset.css";
+import "./reset.css";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import { HomePage } from "client/src/pages/HomePage.tsx";
-import { Layout } from "client/src/components/Layout/Layout.tsx";
-import { InstagramPage } from "client/src/pages/InstagramPage.tsx";
-import { TwitterPage } from "client/src/pages/TwitterPage.tsx";
-import { FacebookPage } from "client/src/pages/FacebookPage.tsx";
-import { YoutubePage } from "client/src/pages/YoutubePage.tsx";
-import { StatisticPage } from "client/src/pages/StatisticPage.tsx";
-import { DashboardPage } from "client/src/pages/Dashboard.tsx";
-import { DocumentsPage } from "client/src/pages/Documents.tsx";
-import { SettingsPage } from "client/src/pages/Settings.tsx";
-import { LogPage } from "client/src/pages/Log.tsx";
+import { HomePage } from "@/pages/HomePage.tsx";
+import { Layout } from "@/components/Layout/Layout.tsx";
+import { InstagramPage } from "@/pages/InstagramPage.tsx";
+import { TwitterPage } from "@/pages/TwitterPage.tsx";
+import { FacebookPage } from "@/pages/FacebookPage.tsx";
+import { YoutubePage } from "@/pages/YoutubePage.tsx";
+import { StatisticPage } from "@/pages/StatisticPage.tsx";
+import { DashboardPage } from "@/pages/Dashboard.tsx";
+import { DocumentsPage } from "@/pages/Documents.tsx";
+import { SettingsPage } from "@/pages/Settings.tsx";
+import { LogPage } from "@/pages/Log.tsx";
 
 export const AppRouters = () => {
   return (

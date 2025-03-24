@@ -18,14 +18,14 @@ A lightweight social media dashboard where users can track analytics from variou
 
 ### Frontend
 
-- Import aliases
+- ...
 
 ### Backend
 
-- .env
-- Import aliases 
+- Global error handling (logger)
+- Routes protection
 - Swagger
-- Global error handling
+- Postman collection
 - Data Storage (Redis)
 - Traffic Management (express-rate-limit)
 - Cron Jobs

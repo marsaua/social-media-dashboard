@@ -1,11 +1,11 @@
-import { WeekStatisticBox } from "client/src/components/InstaComponennts/WeekStatisticBox.tsx";
-import { ProfileBox } from "client/src/components/InstaComponennts/ProfileBox.tsx";
-import { GalleryBox } from "client/src/components/InstaComponennts/GalleryBox.tsx";
+import { WeekStatisticBox } from "@/components/InstaComponennts/WeekStatisticBox.tsx";
+import { ProfileBox } from "@/components/InstaComponennts/ProfileBox.tsx";
+import { GalleryBox } from "@/components/InstaComponennts/GalleryBox.tsx";
 import Stack from "@mui/material/Stack";
-import { AboutInsta } from "client/src/components/InstaComponennts/AboutInsta.tsx";
-import { Diagram } from "client/src/components/InstaComponennts/Diagram.tsx";
+import { AboutInsta } from "@/components/InstaComponennts/AboutInsta.tsx";
+import { Diagram } from "@/components/InstaComponennts/Diagram.tsx";
 import Box from "@mui/material/Box";
-import { DiagramTabs } from "client/src/components/InstaComponennts/DiagramTabs.tsx";
+import { DiagramTabs } from "@/components/InstaComponennts/DiagramTabs.tsx";
 
 export const InstagramPage = () => {
   return (
