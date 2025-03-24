@@ -3,14 +3,15 @@ import { ProfileBox } from "../components/InstaComponennts/ProfileBox";
 import { GalleryBox } from "../components/InstaComponennts/GalleryBox";
 import Stack from "@mui/material/Stack";
 import { AboutInsta } from "../components/InstaComponennts/AboutInsta";
-import { Diagram } from "../components/InstaComponennts/Diagram";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+
 import { DiagramTabs } from "../components/InstaComponennts/DiagramTabs";
 
 export const InstagramPage = () => {
   return (
     <Stack direction="column" spacing={3} sx={{ width: "100%" }}>
-      <h1>Instagram Page</h1>
+      <Typography variant="h1">Instagram Page</Typography>
       <WeekStatisticBox />
       <Stack spacing={2} direction={"row"}>
         <ProfileBox />
