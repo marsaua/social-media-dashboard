@@ -2,7 +2,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { useState } from "react";
-import { Diagram } from "./Diagram";
+import { Diagram } from "@/components/InstaComponennts/Diagram";
 
 export const DiagramTabs = () => {
   const [value, setValue] = useState("Followers");

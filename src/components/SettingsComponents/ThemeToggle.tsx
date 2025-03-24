@@ -11,7 +11,9 @@ export const ThemeToggle = () => {
       <Switch
         checked={themeMode === "dark"}
         onChange={toggleTheme}
-        aria-label="Dark Mode"
+        aria-label={
+          themeMode === "dark" ? "Switch to Dark Mode" : "Switch to Light Mode"
+        }
       />
       <Typography>
         {themeMode === "dark" ? "Dark Mode" : "Light Mode"}
