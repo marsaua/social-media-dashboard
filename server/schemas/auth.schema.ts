@@ -15,8 +15,8 @@ export const authSchema = {
       .min(8, "Password must be at least 8 characters long")
       .max(64, "Password must not exceed 64 characters")
       .regex(
-        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/,
-        "Password must include at least one letter, one number, and be at least 8 characters long",
+        /^(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{8,}$/,
+        "Password must include at least one number and one special character",
       ),
     firstName: z
       .string()
@@ -43,8 +43,8 @@ export const authSchema = {
       .min(8, "Password must be at least 8 characters long")
       .max(64, "Password must not exceed 64 characters")
       .regex(
-        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/,
-        "Password must include at least one letter, one number, and be at least 8 characters long",
+        /^(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{8,}$/,
+        "Password must include at least one number and one special character",
       ),
   }),
 
