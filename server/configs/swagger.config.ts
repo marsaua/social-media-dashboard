@@ -10,7 +10,7 @@ const setupSwagger = (app: Express) => {
 
   app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-  logger.info(`Docs are running on http://localhost:${PORT}/docs`);
+  logger.info(`Docs running at http://localhost:${PORT}/docs`);
 };
 
 export default setupSwagger;
