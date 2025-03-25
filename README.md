@@ -22,7 +22,7 @@ A lightweight social media dashboard where users can track analytics from variou
 
 ### Backend
 
-- Global error handling (logger)
+- Avatars storage methods (cloudinary?)
 - Routes protection
 - Data Storage (Redis)
 - Traffic Management (express-rate-limit)

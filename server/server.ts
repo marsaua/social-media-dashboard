@@ -2,11 +2,12 @@ import mongoose from "mongoose";
 
 import app from "app.ts";
 import { PORT } from "configs/server.config.ts";
+import logger from "utils/logger.util.ts";
 
 mongoose.connection.once("open", () => {
-  console.log("Connected to MongoDB");
+  logger.info("Connected to MongoDB");
 
   app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+    logger.info(`Server running at http://localhost:${PORT}`);
   });
 });
