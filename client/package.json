@@ -7,8 +7,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint ..",
     "preview": "vite preview",
-    "start": "pnpm run dev",
-    "test": "pnpm test"
+    "start": "npm run dev",
+    "test": "npm test"
   },
   "type": "module",
   "dependencies": {

@@ -19,7 +19,7 @@ app.use(cookieParser());
 
 setupSwagger(app);
 
-app.use("/auth", authRouter);
+app.use("/api/auth", authRouter);
 
 app.use(verifyJWT);
 // Protected endpoints
