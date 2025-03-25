@@ -8,9 +8,9 @@ A lightweight social media dashboard where users can track analytics from variou
 
 ### General
 
+- Deploy
 - README structure
 - Git hooks
-- Deploy
 - GitHub actions
 - PlantUML diagrams
 - Containerization
@@ -24,8 +24,6 @@ A lightweight social media dashboard where users can track analytics from variou
 
 - Global error handling (logger)
 - Routes protection
-- Swagger
-- Postman collection
 - Data Storage (Redis)
 - Traffic Management (express-rate-limit)
 - Cron Jobs
