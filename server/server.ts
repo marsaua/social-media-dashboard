@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 import app from "app.ts";
 import { PORT } from "configs/server.config.ts";
 import logger from "utils/logger.util.ts";

@@ -3,7 +3,6 @@ import { ProfileBox } from "@/components/InstaComponennts/ProfileBox.tsx";
 import { GalleryBox } from "@/components/InstaComponennts/GalleryBox.tsx";
 import Stack from "@mui/material/Stack";
 import { AboutInsta } from "@/components/InstaComponennts/AboutInsta.tsx";
-import { Diagram } from "@/components/InstaComponennts/Diagram.tsx";
 import Box from "@mui/material/Box";
 import { DiagramTabs } from "@/components/InstaComponennts/DiagramTabs.tsx";
 

@@ -11,24 +11,40 @@ import { DashboardPage } from "@/pages/Dashboard.tsx";
 import { DocumentsPage } from "@/pages/Documents.tsx";
 import { SettingsPage } from "@/pages/Settings.tsx";
 import { LogPage } from "@/pages/Log.tsx";
+import { LoginPage } from "./pages/LoginPage";
+import { RegistrationPage } from "./pages/RegistrationPage";
+import { StartPage } from "./pages/StartPage";
+import { LayoutStart } from "./components/Layout/LayoutStart";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const AppRouters = () => {
+  const queryClient = useQueryClient();
+  const token = queryClient.getQueryData<string>(["authToken"]);
+
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path="/instagram" element={<InstagramPage />} />
-            <Route path="/twitter" element={<TwitterPage />} />
-            <Route path="/facebook" element={<FacebookPage />} />
-            <Route path="/youtube" element={<YoutubePage />} />
-            <Route path="/statistic" element={<StatisticPage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/documents" element={<DocumentsPage />} />
-            <Route path="/settings" element={<SettingsPage />} />
-            <Route path="/log" element={<LogPage />} />
-          </Route>
+          {!token ? (
+            <Route path="/" element={<LayoutStart />}>
+              <Route index element={<StartPage />} />
+              <Route path="/start/signup" element={<RegistrationPage />} />
+              <Route path="/start/login" element={<LoginPage />} />
+            </Route>
+          ) : (
+            <Route path="/" element={<Layout />}>
+              <Route index element={<HomePage />} />
+              <Route path="/instagram" element={<InstagramPage />} />
+              <Route path="/twitter" element={<TwitterPage />} />
+              <Route path="/facebook" element={<FacebookPage />} />
+              <Route path="/youtube" element={<YoutubePage />} />
+              <Route path="/statistic" element={<StatisticPage />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/documents" element={<DocumentsPage />} />
+              <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/log" element={<LogPage />} />
+            </Route>
+          )}
         </Routes>
       </BrowserRouter>
     </>

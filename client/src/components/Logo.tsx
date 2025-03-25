@@ -1,7 +1,6 @@
-import React from "react";
-import { SvgIcon } from "@mui/material";
+import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
 
-export const Logo = (props) => {
+export const Logo = (props: SvgIconProps) => {
   return (
     <SvgIcon {...props} viewBox="-3.36 -3.36 30.72 30.72">
       <rect

@@ -3,7 +3,6 @@ import ToggleButton from "@mui/material/ToggleButton";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Logo } from "client/public/icons/Logo.tsx";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import XIcon from "@mui/icons-material/X";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -15,12 +14,16 @@ import TuneIcon from "@mui/icons-material/Tune";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { grey } from "@mui/material/colors";
 import { useEffect, useState } from "react";
+import { Logo } from "./Logo";
 
 export const Aside = () => {
   const navigate = useNavigate();
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState<string | undefined>();
   const location = useLocation();
-  const handleAlignment = (e, newValue) => {
+  const handleAlignment = (
+    _: React.MouseEvent<HTMLElement>,
+    newValue: string | undefined,
+  ) => {
     setSelected(newValue);
   };
 
@@ -36,7 +39,7 @@ export const Aside = () => {
     if (location) {
       setSelected(location.pathname.slice(1));
     }
-  }, [location.pathname]);
+  }, [location]);
 
   return (
     <Box
@@ -49,7 +52,6 @@ export const Aside = () => {
     >
       <Box
         onClick={() => navigate("/")}
-        value="logo"
         aria-label="logo"
         sx={{
           display: "flex",
