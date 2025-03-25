@@ -59,7 +59,7 @@ security:
 servers:
   - url: http://localhost:8080
 paths:
-  /auth/register:
+  /api/auth/register:
     post:
       summary: "Register a new user"
       description: "Endpoint to create a new user account"
@@ -101,7 +101,7 @@ paths:
                         example: "Field must not be empty."
         '500':
           $ref: "#/components/responses/500UnexpectedError"
-  /auth/login:
+  /api/auth/login:
     post:
       summary: "Login user"
       description: "Endpoint to authenticate user and generate tokens"
@@ -169,7 +169,7 @@ paths:
                     example: "Invalid credentials."
         '500':
           $ref: "#/components/responses/500UnexpectedError"
-  /auth/logout:
+  /api/auth/logout:
     post:
       summary: "Log out user"
       description: "Endpoint to log out a user and clear their refresh token cookie"
@@ -198,7 +198,7 @@ paths:
                     example: "No refresh token present."
         '500':
           $ref: "#/components/responses/500UnexpectedError"
-  /auth/refreshToken:
+  /api/auth/refreshToken:
     post:
       summary: "Refresh access token"
       description: "Endpoint to refresh a user's expired access token using a valid refresh token"
