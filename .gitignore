@@ -28,3 +28,4 @@ dist/
 .env
 .pnpm-store/
 *.yaml
+!/server/docs/**/*.yaml

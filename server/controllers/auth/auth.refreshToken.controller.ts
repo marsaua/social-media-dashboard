@@ -1,22 +1,34 @@
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { VerifyErrors } from "jsonwebtoken";
 
 import User from "models/user.model.ts";
 import { ACCESS_TOKEN_EXPIRES_IN } from "configs/auth.config.ts";
 
 export const refreshToken = async (req: Request, res: Response) => {
-  const refreshToken = req.cookies.refreshToken;
-  if (!refreshToken) {
-    return res.sendStatus(401);
-  }
-
-  const foundUser = await User.findOne({ refreshToken });
-  if (!foundUser) {
-    return res.sendStatus(403);
-  }
-
   try {
-    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!);
+    const { refreshToken } = req.cookies;
+    if (!refreshToken) {
+      return res.status(401).json({ message: "Refresh token is missing." });
+    }
+
+    const foundUser = await User.findOne({ refreshToken });
+    if (!foundUser) {
+      return res
+        .status(403)
+        .json({ message: "Invalid refresh token or user not found." });
+    }
+
+    jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET!,
+      (err: VerifyErrors | null) => {
+        if (err) {
+          return res
+            .status(403)
+            .json({ message: "Refresh token is invalid or expired." });
+        }
+      },
+    );
 
     const newAccessToken = jwt.sign(
       { id: foundUser._id, username: foundUser.username },
