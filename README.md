@@ -11,7 +11,7 @@ A lightweight social media dashboard where users can track analytics from variou
 - Deploy
 - README structure
 - Git hooks
-- GitHub actions
+- CI/CD
 - PlantUML diagrams
 - Containerization
 - SonarQube?
@@ -23,7 +23,12 @@ A lightweight social media dashboard where users can track analytics from variou
 ### Backend
 
 - Avatars storage methods (cloudinary?)
+- Environment Variable Validation (envalid) 
 - Routes protection
 - Data Storage (Redis)
-- Traffic Management (express-rate-limit)
+- Traffic Management
 - Cron Jobs
+- Nginx
+- Testing
+- Compression
+- Database Query Optimization
