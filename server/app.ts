@@ -1,13 +1,13 @@
 import "dotenv/config";
 import express from "express";
+import path from "node:path";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import path from "node:path";
 
 import connectDb from "configs/db.config.ts";
 import authRouter from "routes/auth.route.ts";
-import setupSwagger from "configs/swagger.config.ts";
 import verifyJWT from "middlewares/auth.verifyJWT.middleware.ts";
+import morganLogger from "middlewares/morgan.middleware.ts";
 
 connectDb();
 
@@ -16,8 +16,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
-
-setupSwagger(app);
+app.use(morganLogger);
 
 app.use("/api/auth", authRouter);
 
