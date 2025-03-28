@@ -10,15 +10,9 @@ const useRefreshToken = () => {
   const { setAuth } = useAuth();
 
   const refresh = async (): Promise<string> => {
-    const response = await fetchData<RefreshResponse>("/auth/refreshToken", "POST", undefined, {}, true);
-    setAuth((prev) => {
-      console.log(JSON.stringify(prev));
-      console.log(response.accessToken);
-      return {
-        ...prev,
-        accessToken: response.accessToken,
-      };
-    });
+    const response = await fetchData<RefreshResponse>("/auth/refresh-token", "POST", undefined, {}, true);
+    setAuth(response);
+    console.log(response);
     return response.accessToken;
   };
 

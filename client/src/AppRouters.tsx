@@ -33,8 +33,8 @@ export const AppRouters = () => {
           </Route>
 
           {/* private pages */}
-          <Route element={<RequireAuth />}>
-            <Route element={<PersistLogin />}>
+          <Route element={<PersistLogin />}>
+            <Route element={<RequireAuth />}>
               <Route path="/" element={<Layout />}>
                 <Route path="home" element={<HomePage />} />
                 <Route path="instagram" element={<InstagramPage />} />

@@ -10,7 +10,7 @@ export const useRegistration = () => {
   const navigate = useNavigate();
   const registerUser = async (data: User) => {
     try {
-      const result: { accessToken: string } = await fetchData("/auth/register", "POST", data);
+      const result: { accessToken: string } = await fetchData("/auth/register", "POST", data, {}, true);
       return result;
     } catch (error: unknown) {
       if (error instanceof Error) {

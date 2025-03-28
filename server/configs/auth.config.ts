@@ -5,7 +5,8 @@ export const REFRESH_TOKEN_EXPIRES_IN = "24h";
 
 export const refreshTokenCookieOptions: CookieOptions = {
   httpOnly: true,
-  secure: true,
-  sameSite: "strict",
+  secure: false,
+  sameSite: "lax",
+  path: "/",
   maxAge: 24 * 60 * 60 * 1000, // 24 hours
 };

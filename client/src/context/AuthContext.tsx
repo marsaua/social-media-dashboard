@@ -1,14 +1,6 @@
-import { createContext, useState, Dispatch, SetStateAction } from "react";
+import { createContext, useState } from "react";
 
-interface AuthContextType {
-  auth: { accessToken?: string };
-  setAuth: Dispatch<SetStateAction<{ accessToken?: string }>>;
-}
-
-const AuthContext = createContext<AuthContextType>({
-  auth: {},
-  setAuth: () => {},
-});
+const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [auth, setAuth] = useState<{ accessToken?: string }>({});

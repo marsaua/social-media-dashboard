@@ -7,7 +7,7 @@ export const fetchData = async <T>(
   method = "GET",
   body?: any,
   headers: Record<string, string> = {},
-  credentials = false,
+  credentials = true,
 ): Promise<T> => {
   const options: RequestInit = {
     method,
