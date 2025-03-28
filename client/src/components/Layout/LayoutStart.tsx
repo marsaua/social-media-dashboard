@@ -49,15 +49,11 @@ export const LayoutStart = () => {
             padding: "0 100px",
           }}
         >
-          <Typography
-            variant="h2"
-            sx={{ fontWeight: "bold", marginBottom: "20px" }}
-          >
+          <Typography variant="h2" sx={{ fontWeight: "bold", marginBottom: "20px" }}>
             Feel the pulse
           </Typography>
           <Typography variant="h4">
-            Discover where your content resonates and how your audience reacts,
-            day by day.
+            Discover where your content resonates and how your audience reacts, day by day.
           </Typography>
         </Box>
       </Box>

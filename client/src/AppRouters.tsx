@@ -1,5 +1,5 @@
 import "./reset.css";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { HomePage } from "@/pages/HomePage.tsx";
 import { Layout } from "@/components/Layout/Layout.tsx";
 import { InstagramPage } from "@/pages/InstagramPage.tsx";
@@ -15,38 +15,43 @@ import { LoginPage } from "./pages/LoginPage";
 import { RegistrationPage } from "./pages/RegistrationPage";
 import { StartPage } from "./pages/StartPage";
 import { LayoutStart } from "./components/Layout/LayoutStart";
-import { useQueryClient } from "@tanstack/react-query";
+import { PersistLogin } from "./pages/PersistLogin";
+import { LayoutApp } from "./components/Layout/LayoutApp";
+import { RequireAuth } from "./components/RequireAuth";
+import { MissingPage } from "./pages/MissingPage";
 
 export const AppRouters = () => {
-  const queryClient = useQueryClient();
-  const token = queryClient.getQueryData<string>(["authToken"]);
-
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          {!token ? (
-            <Route path="/" element={<LayoutStart />}>
-              <Route index element={<StartPage />} />
-              <Route path="/start/signup" element={<RegistrationPage />} />
-              <Route path="/start/login" element={<LoginPage />} />
+      <Routes>
+        {/* public pages */}
+        <Route path="/" element={<LayoutApp />}>
+          <Route path="start" element={<LayoutStart />}>
+            <Route index element={<StartPage />} />
+            <Route path="signup" element={<RegistrationPage />} />
+            <Route path="login" element={<LoginPage />} />
+          </Route>
+
+          {/* private pages */}
+          <Route element={<RequireAuth />}>
+            <Route element={<PersistLogin />}>
+              <Route path="/" element={<Layout />}>
+                <Route path="home" element={<HomePage />} />
+                <Route path="instagram" element={<InstagramPage />} />
+                <Route path="twitter" element={<TwitterPage />} />
+                <Route path="facebook" element={<FacebookPage />} />
+                <Route path="youtube" element={<YoutubePage />} />
+                <Route path="statistic" element={<StatisticPage />} />
+                <Route path="dashboard" element={<DashboardPage />} />
+                <Route path="documents" element={<DocumentsPage />} />
+                <Route path="settings" element={<SettingsPage />} />
+                <Route path="log" element={<LogPage />} />
+              </Route>
             </Route>
-          ) : (
-            <Route path="/" element={<Layout />}>
-              <Route index element={<HomePage />} />
-              <Route path="/instagram" element={<InstagramPage />} />
-              <Route path="/twitter" element={<TwitterPage />} />
-              <Route path="/facebook" element={<FacebookPage />} />
-              <Route path="/youtube" element={<YoutubePage />} />
-              <Route path="/statistic" element={<StatisticPage />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/documents" element={<DocumentsPage />} />
-              <Route path="/settings" element={<SettingsPage />} />
-              <Route path="/log" element={<LogPage />} />
-            </Route>
-          )}
-        </Routes>
-      </BrowserRouter>
+          </Route>
+          <Route path="*" element={<MissingPage />} />
+        </Route>
+      </Routes>
     </>
   );
 };

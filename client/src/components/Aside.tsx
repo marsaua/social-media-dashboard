@@ -15,15 +15,15 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { grey } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
+import Button from "@mui/material/Button";
+import { LogoutModal } from "./Modals/LogoutModal";
 
 export const Aside = () => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState<string | undefined>();
+  const [open, setOpen] = useState(false);
   const location = useLocation();
-  const handleAlignment = (
-    _: React.MouseEvent<HTMLElement>,
-    newValue: string | undefined,
-  ) => {
+  const handleAlignment = (_: React.MouseEvent<HTMLElement>, newValue: string | undefined) => {
     setSelected(newValue);
   };
 
@@ -40,6 +40,10 @@ export const Aside = () => {
       setSelected(location.pathname.slice(1));
     }
   }, [location]);
+
+  const handleLogout = () => {
+    setOpen(true);
+  };
 
   return (
     <Box
@@ -74,35 +78,19 @@ export const Aside = () => {
         <Typography variant={"h3"} color={grey[500]} sx={{ padding: "19px" }}>
           Social
         </Typography>
-        <ToggleButton
-          value="instagram"
-          sx={{ ...asideItem }}
-          onClick={() => navigate("/instagram")}
-        >
+        <ToggleButton value="instagram" sx={{ ...asideItem }} onClick={() => navigate("/instagram")}>
           <InstagramIcon />
           <Typography>Instagram</Typography>
         </ToggleButton>
-        <ToggleButton
-          value="twitter"
-          sx={{ ...asideItem }}
-          onClick={() => navigate("/twitter")}
-        >
+        <ToggleButton value="twitter" sx={{ ...asideItem }} onClick={() => navigate("/twitter")}>
           <XIcon />
           <Typography>Twitter</Typography>
         </ToggleButton>
-        <ToggleButton
-          value="facebook"
-          sx={{ ...asideItem }}
-          onClick={() => navigate("/facebook")}
-        >
+        <ToggleButton value="facebook" sx={{ ...asideItem }} onClick={() => navigate("/facebook")}>
           <FacebookIcon />
           <Typography>Facebook</Typography>
         </ToggleButton>
-        <ToggleButton
-          value="youtube"
-          sx={{ ...asideItem }}
-          onClick={() => navigate("/youtube")}
-        >
+        <ToggleButton value="youtube" sx={{ ...asideItem }} onClick={() => navigate("/youtube")}>
           <YouTubeIcon />
           <Typography>Youtube</Typography>
         </ToggleButton>
@@ -110,27 +98,15 @@ export const Aside = () => {
         <Typography variant={"h3"} color={grey[500]} sx={{ padding: "19px" }}>
           Menu
         </Typography>
-        <ToggleButton
-          value="statistic"
-          sx={{ ...asideItem }}
-          onClick={() => navigate("/statistic")}
-        >
+        <ToggleButton value="statistic" sx={{ ...asideItem }} onClick={() => navigate("/statistic")}>
           <EqualizerIcon />
           <Typography>Statistics</Typography>
         </ToggleButton>
-        <ToggleButton
-          value="dashboard"
-          sx={{ ...asideItem }}
-          onClick={() => navigate("/dashboard")}
-        >
+        <ToggleButton value="dashboard" sx={{ ...asideItem }} onClick={() => navigate("/dashboard")}>
           <SpaceDashboardIcon />
           <Typography>Dashboard</Typography>
         </ToggleButton>
-        <ToggleButton
-          value="documents"
-          sx={{ ...asideItem }}
-          onClick={() => navigate("/documents")}
-        >
+        <ToggleButton value="documents" sx={{ ...asideItem }} onClick={() => navigate("/documents")}>
           <SourceIcon />
           <Typography>Documents</Typography>
         </ToggleButton>
@@ -138,23 +114,16 @@ export const Aside = () => {
         <Typography variant={"h3"} color={grey[500]} sx={{ padding: "19px" }}>
           Other
         </Typography>
-        <ToggleButton
-          value="settings"
-          sx={{ ...asideItem }}
-          onClick={() => navigate("/settings")}
-        >
+        <ToggleButton value="settings" sx={{ ...asideItem }} onClick={() => navigate("/settings")}>
           <TuneIcon />
           <Typography>Settings</Typography>
         </ToggleButton>
-        <ToggleButton
-          value="logout"
-          sx={{ ...asideItem }}
-          onClick={() => navigate("/log")}
-        >
+        <ToggleButton value="logout" sx={{ ...asideItem }} onClick={() => navigate("/log")}>
           <LogoutIcon />
-          <Typography>Log Out</Typography>
+          <Button onClick={handleLogout}>Log Out</Button>
         </ToggleButton>
       </ToggleButtonGroup>
+      {open && <LogoutModal open={open} onClose={() => setOpen(false)} />}
     </Box>
   );
 };

@@ -39,12 +39,10 @@ export const StartPage = () => {
           width: "100%",
         }}
       >
-        <Stack
-          direction="column"
-          gap={4}
-          sx={{ justifyContent: "center", maxWidth: "300px", width: "100%" }}
-        >
-          <Button variant="outlined">Sign In</Button>
+        <Stack direction="column" gap={4} sx={{ justifyContent: "center", maxWidth: "300px", width: "100%" }}>
+          <Button variant="outlined" onClick={() => navigate("/start/login")}>
+            Sign In
+          </Button>
           <Button variant="outlined" onClick={handleSignUp}>
             Sign Up
           </Button>

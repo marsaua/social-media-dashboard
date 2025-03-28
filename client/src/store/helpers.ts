@@ -7,6 +7,7 @@ export const fetchData = async <T>(
   method = "GET",
   body?: any,
   headers: Record<string, string> = {},
+  credentials = false,
 ): Promise<T> => {
   const options: RequestInit = {
     method,
@@ -18,6 +19,9 @@ export const fetchData = async <T>(
 
   if (body) {
     options.body = JSON.stringify(body);
+  }
+  if (credentials) {
+    options.credentials = "include";
   }
 
   const response = await fetch(`http://localhost:8080/api${endpoint}`, options);
