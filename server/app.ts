@@ -5,23 +5,25 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 import connectDb from "configs/db.config.ts";
-import authRouter from "routes/auth.route.ts";
+import setupSwagger from "configs/swagger.config.ts";
 import verifyJWT from "middlewares/auth.verifyJWT.middleware.ts";
-import morganLogger from "middlewares/morgan.middleware.ts";
+import requestLogger from "middlewares/requestLogger.middleware.ts";
+import authRouter from "routes/auth.route.ts";
+import userRoute from "routes/users.route.ts";
 
 connectDb();
 
 const app = express();
 
+setupSwagger(app);
+
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
-app.use(morganLogger);
+app.use(requestLogger);
 
 app.use("/api/auth", authRouter);
-
-app.use(verifyJWT);
-// Protected endpoints
+app.use("/api/users", verifyJWT, userRoute);
 
 app.use((req, res, next) => {
   res.status(404).json({ error: "Endpoint not found" });

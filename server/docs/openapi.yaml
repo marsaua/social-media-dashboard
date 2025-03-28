@@ -198,7 +198,7 @@ paths:
                     example: "No refresh token present."
         '500':
           $ref: "#/components/responses/500UnexpectedError"
-  /api/auth/refreshToken:
+  /api/auth/refresh-token:
     post:
       summary: "Refresh access token"
       description: "Endpoint to refresh a user's expired access token using a valid refresh token"
@@ -235,5 +235,166 @@ paths:
                   message:
                     type: string
                     description: "nvalid refresh token or user not found."
+        '500':
+          $ref: "#/components/responses/500UnexpectedError"
+  /api/users/current:
+    get:
+      summary: Get current user
+      description: Retrieve the details of the currently authenticated user.
+      tags:
+        - Users
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: Successfully retrieved user information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique identifier for the user.
+                    example: "64f0c7b6ee1d4d001adf4e12"
+                  username:
+                    type: string
+                    description: The user's username.
+                    example: "john_doe"
+                  firstName:
+                    type: string
+                    description: The user's first name.
+                    example: "John"
+                  lastName:
+                    type: string
+                    description: The user's last name.
+                    example: "Doe"
+                  avatar:
+                    type: string
+                    format: url
+                    description: The URL of the user's avatar.
+                    example: "https://cloudinary.com/path-to-avatar-image"
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error message.
+                    example: "Unauthorized"
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: The error message.
+                    example: "User not found."
+        '500':
+          $ref: "#/components/responses/500UnexpectedError"
+
+  /api/users/{userId}:
+    patch:
+      summary: Update a user
+      description: Update a user's information, such as `username`, `firstName`, `lastName`, or upload a new profile picture (`avatar`).
+      tags:
+        - Users
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The unique identifier for the user to be updated.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  minLength: 4
+                  maxLength: 20
+                  pattern: "^[a-zA-Z0-9_]+$"
+                  description: Username must be at least 4 characters long and must not exceed 20 characters. 
+                    It can only contain letters, numbers, and underscores.
+                firstName:
+                  type: string
+                  minLength: 1
+                  maxLength: 50
+                  description: First name must not be empty. It must not exceed 50 characters.
+                lastName:
+                  type: string
+                  maxLength: 50
+                  description: Last name must not exceed 50 characters.
+                avatar:
+                  type: string
+                  format: binary
+                  description: File must be an image of type PNG, JPEG, JPG, SVG, or GIF. Its size must not exceed 3MB.
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique identifier for the user.
+                  username:
+                    type: string
+                    description: The user's username.
+                  firstName:
+                    type: string
+                    description: The first name of the user.
+                  lastName:
+                    type: string
+                    description: The last name of the user (if provided).
+                  avatar:
+                    type: string
+                    format: url
+                    description: URL for the user's avatar.
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Validation failed.
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        field:
+                          type: string
+                          example: firstName
+                        message:
+                          type: string
+                          example: "First name is required."
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "User not found."
         '500':
           $ref: "#/components/responses/500UnexpectedError"

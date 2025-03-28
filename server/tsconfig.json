@@ -10,7 +10,8 @@
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "outDir": "dist",
-    "baseUrl": "./"
+    "baseUrl": "./",
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts"],
+  "files": ["global.d.ts"]
 }

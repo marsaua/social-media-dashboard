@@ -44,7 +44,7 @@ export const login = async (req: Request, res: Response) => {
     foundUser.refreshToken = refreshToken;
     await foundUser.save();
 
-    res.cookie("refreshToken", refreshToken, refreshTokenCookieOptions);
+    res.cookie("refresh_token", refreshToken, refreshTokenCookieOptions);
 
     return res.status(200).json({ accessToken });
   } catch (error) {
