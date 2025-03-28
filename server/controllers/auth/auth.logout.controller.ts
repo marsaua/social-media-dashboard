@@ -14,11 +14,11 @@ export const logout = async (req: Request, res: Response) => {
     const foundUser = await User.findOne({ refreshToken });
 
     if (foundUser) {
-      foundUser.refreshToken = undefined;
+      foundUser.refreshToken = null;
       await foundUser.save();
     }
 
-    res.clearCookie("refreshToken", {
+    res.clearCookie("refresh_token", {
       ...refreshTokenCookieOptions,
     });
 

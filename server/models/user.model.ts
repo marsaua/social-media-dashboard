@@ -5,9 +5,11 @@ type UserModel = Document & {
   password: string;
   firstName: string;
   lastName?: string;
-  avatar?: string;
-  refreshToken?: string;
+  avatar: string | null;
+  refreshToken: string | null;
 };
+
+export const PUBLIC_USER_FIELDS = "username firstName lastName avatar";
 
 const { Schema } = mongoose;
 
@@ -27,8 +29,14 @@ const userSchema = new Schema<UserModel>(
       required: true,
     },
     lastName: String,
-    avatar: String,
-    refreshToken: String,
+    avatar: {
+      type: String,
+      default: null,
+    },
+    refreshToken: {
+      type: String,
+      default: null,
+    },
   },
   {
     timestamps: true,

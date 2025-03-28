@@ -41,7 +41,7 @@ export const register = async (req: Request, res: Response) => {
     newUser.refreshToken = refreshToken;
     await newUser.save();
 
-    res.cookie("refreshToken", refreshToken, refreshTokenCookieOptions);
+    res.cookie("refresh_token", refreshToken, refreshTokenCookieOptions);
 
     return res.status(201).json({ accessToken });
   } catch (error) {

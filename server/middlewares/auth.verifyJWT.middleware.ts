@@ -1,11 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-interface CustomRequest extends Request {
-  user?: any;
-}
+type JWTUserData = {
+  id: string;
+  username: string;
+};
 
-const verifyJWT = (req: CustomRequest, res: Response, next: NextFunction) => {
+const verifyJWT = (req: Request, res: Response, next: NextFunction) => {
   const bearerToken = req.headers.authorization?.split(" ")[1];
 
   if (!bearerToken) {
@@ -15,7 +16,10 @@ const verifyJWT = (req: CustomRequest, res: Response, next: NextFunction) => {
   }
 
   try {
-    req.user = jwt.verify(bearerToken, process.env.ACCESS_TOKEN_SECRET!);
+    req.user = jwt.verify(
+      bearerToken,
+      process.env.ACCESS_TOKEN_SECRET!,
+    ) as JWTUserData;
     next();
   } catch (err) {
     return res.status(403).json({ message: "Invalid or expired token." });

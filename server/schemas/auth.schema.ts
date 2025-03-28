@@ -26,7 +26,6 @@ export const authSchema = {
       .string()
       .max(50, "Last name must not exceed 50 characters")
       .optional(),
-    avatar: z.string().url("Avatar must be a valid URL").optional(),
   }),
 
   login: z.object({
@@ -52,5 +51,3 @@ export const authSchema = {
     refreshToken: z.string(),
   }),
 };
-
-export type RegisterSchema = z.infer<typeof authSchema.register>;
