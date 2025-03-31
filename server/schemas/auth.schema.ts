@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const authSchema = {
+const authSchema = {
   register: z.object({
     username: z
       .string()
@@ -51,3 +51,5 @@ export const authSchema = {
     refreshToken: z.string(),
   }),
 };
+
+export default authSchema;

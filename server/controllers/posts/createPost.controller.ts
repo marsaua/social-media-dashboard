@@ -2,27 +2,24 @@ import { Request, Response } from "express";
 import { UploadApiResponse } from "cloudinary";
 import { z } from "zod";
 
+import Post from "models/post.model.ts";
+import postSchema from "schemas/post.schema.ts";
 import cloudinary from "configs/uploadMedia.config.ts";
-import User from "models/user.model.ts";
-import { userSchema } from "schemas/user.schema.ts";
 
-const updateUser = async (req: Request, res: Response) => {
+const createPost = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
+    const userId = req.user?.id;
 
-    const { username, lastName, firstName } = userSchema.update.parse(req.body);
+    const { title, description } = postSchema.create.parse(req.body);
 
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
+    let imageUrl: string | null = null;
 
     if (req.file) {
       try {
         const result = await new Promise<UploadApiResponse>(
           (resolve, reject) => {
             const stream = cloudinary.uploader.upload_stream(
-              { folder: "user-avatars" },
+              { folder: "post-images" },
               (error, response) => {
                 if (error) return reject(error);
 
@@ -36,26 +33,35 @@ const updateUser = async (req: Request, res: Response) => {
           },
         );
 
-        user.avatar = result.secure_url;
+        imageUrl = result.secure_url;
       } catch (error) {
-        return res.status(500).json({ error });
+        return res.status(500).json({ error: "Error uploading image." });
       }
     }
 
-    if (username) user.username = username;
-    if (firstName) user.firstName = firstName;
-    if (lastName) user.lastName = lastName;
+    const post = new Post({
+      title,
+      description,
+      userId,
+    });
 
-    await user.save();
+    if (imageUrl) {
+      post.image = imageUrl;
+    }
 
-    res.status(200).json(user);
+    await post.save();
+
+    return res.status(201).json(post);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return res.status(400).json({ errors: error });
+      return res.status(400).json({
+        message: "Validation failed.",
+        errors: error.flatten().fieldErrors,
+      });
     }
 
     res.status(500).json({ error: "An unexpected error occurred." });
   }
 };
 
-export default updateUser;
+export default createPost;

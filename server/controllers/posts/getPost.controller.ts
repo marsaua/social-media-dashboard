@@ -1,0 +1,22 @@
+import { Request, Response } from "express";
+
+import Post from "models/post.model";
+
+const getPost = async (req: Request, res: Response) => {
+  try {
+    const { postId } = req.params;
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({ error: "Post not found." });
+    }
+
+    return res.status(200).json(post);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An unexpected error occurred." });
+  }
+};
+
+export default getPost;

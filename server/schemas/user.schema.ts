@@ -1,25 +1,5 @@
 import { z } from "zod";
 
-const fileSizeLimit = 3 * 1024 * 1024; // 3MB
-
-const imageSchema = z
-  .instanceof(File)
-  .refine(
-    (file) =>
-      [
-        "image/png",
-        "image/jpeg",
-        "image/jpg",
-        "image/svg+xml",
-        "image/gif",
-      ].includes(file.type),
-    { message: "asdasdInvalid image file type" },
-  )
-  .refine((file) => file.size <= fileSizeLimit, {
-    message: "File size should not exceed 3MB",
-  })
-  .optional();
-
 export const userSchema = {
   update: z
     .object({
@@ -41,7 +21,7 @@ export const userSchema = {
         .string()
         .max(50, "Last name must not exceed 50 characters")
         .optional(),
-      avatar: imageSchema,
+      avatar: z.any().optional(),
     })
     .strict(),
 };

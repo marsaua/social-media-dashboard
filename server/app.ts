@@ -8,8 +8,9 @@ import connectDb from "configs/db.config.ts";
 import setupSwagger from "configs/swagger.config.ts";
 import verifyJWT from "middlewares/auth.verifyJWT.middleware.ts";
 import requestLogger from "middlewares/requestLogger.middleware.ts";
-import authRouter from "routes/auth.route.ts";
-import userRoute from "routes/users.route.ts";
+import authRoute from "routes/auth.route.ts";
+import usersRoute from "routes/users.route.ts";
+import postsRoute from "routes/posts.route.ts";
 
 connectDb();
 
@@ -22,8 +23,9 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(requestLogger);
 
-app.use("/api/auth", authRouter);
-app.use("/api/users", verifyJWT, userRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/users", verifyJWT, usersRoute);
+app.use("/api/posts", verifyJWT, postsRoute);
 
 app.use((req, res, next) => {
   res.status(404).json({ error: "Endpoint not found" });
