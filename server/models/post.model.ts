@@ -5,6 +5,7 @@ type PostModel = Document & {
   description: string;
   userId: Types.ObjectId;
   image?: string;
+  totalComments: number;
 };
 
 const { Schema } = mongoose;
@@ -25,6 +26,10 @@ const postSchema = new Schema<PostModel>(
       required: true,
     },
     image: { type: String },
+    totalComments: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

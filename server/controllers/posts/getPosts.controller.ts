@@ -7,7 +7,7 @@ const getPosts = async (req: Request, res: Response) => {
     const { userId } = req.params;
 
     if (!userId) {
-      return res.status(400).json({ error: "User ID is required." });
+      return res.status(400).json({ message: "User ID is required." });
     }
 
     const page = req.query.page ? parseInt(req.query.page as string) : null;
@@ -23,13 +23,13 @@ const getPosts = async (req: Request, res: Response) => {
     if (page && page < 1) {
       return res
         .status(400)
-        .json({ error: "'Page' must be a positive number." });
+        .json({ message: "'Page' must be a positive number." });
     }
 
     if (limit && limit < 1) {
       return res
         .status(400)
-        .json({ error: "'Limit' must be a positive number." });
+        .json({ message: "'Limit' must be a positive number." });
     }
 
     if (page && limit) {
@@ -38,7 +38,8 @@ const getPosts = async (req: Request, res: Response) => {
       const posts = await Post.find({ userId })
         .sort("-createdAt")
         .skip(skip)
-        .limit(limit);
+        .limit(limit)
+        .lean();
 
       const totalPosts = await Post.countDocuments({ userId });
 
@@ -54,7 +55,7 @@ const getPosts = async (req: Request, res: Response) => {
     return res.status(200).json(posts);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "An unexpected error occurred." });
+    res.status(500).json({ message: "An unexpected error occurred." });
   }
 };
 

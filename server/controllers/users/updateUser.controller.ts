@@ -14,7 +14,7 @@ const updateUser = async (req: Request, res: Response) => {
 
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
 
     if (req.file) {
@@ -54,7 +54,7 @@ const updateUser = async (req: Request, res: Response) => {
       return res.status(400).json({ errors: error });
     }
 
-    res.status(500).json({ error: "An unexpected error occurred." });
+    res.status(500).json({ message: "An unexpected error occurred." });
   }
 };
 

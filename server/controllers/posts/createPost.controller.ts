@@ -35,7 +35,7 @@ const createPost = async (req: Request, res: Response) => {
 
         imageUrl = result.secure_url;
       } catch (error) {
-        return res.status(500).json({ error: "Error uploading image." });
+        return res.status(500).json({ message: "Error uploading image." });
       }
     }
 
@@ -60,7 +60,7 @@ const createPost = async (req: Request, res: Response) => {
       });
     }
 
-    res.status(500).json({ error: "An unexpected error occurred." });
+    res.status(500).json({ message: "An unexpected error occurred." });
   }
 };
 

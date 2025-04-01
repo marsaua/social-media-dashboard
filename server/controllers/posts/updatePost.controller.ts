@@ -36,24 +36,24 @@ const updatePost = async (req: Request, res: Response) => {
 
         imageUrl = result.secure_url;
       } catch (error) {
-        return res.status(500).json({ error: "Error uploading image." });
+        return res.status(500).json({ message: "Error uploading image." });
       }
     }
 
     if (!userId) {
-      return res.status(401).json({ error: "Unauthorized." });
+      return res.status(401).json({ message: "Unauthorized." });
     }
 
     const post = await Post.findById(postId);
 
     if (!post) {
-      return res.status(404).json({ error: "Post not found." });
+      return res.status(404).json({ message: "Post not found." });
     }
 
     if (post.userId.toString() !== userId) {
       return res
         .status(403)
-        .json({ error: "You are not authorized to perform this action." });
+        .json({ message: "You are not authorized to perform this action." });
     }
 
     if (title) post.title = title;
@@ -71,7 +71,7 @@ const updatePost = async (req: Request, res: Response) => {
       });
     }
 
-    res.status(500).json({ error: "An unexpected error occurred." });
+    res.status(500).json({ message: "An unexpected error occurred." });
   }
 };
 

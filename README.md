@@ -87,11 +87,11 @@ A lightweight social media dashboard where users can track analytics from variou
 #### 4. Content Overview
 
 **Main:**
-- [ ] title
-- [ ] description
-- [ ] photo
-- [ ] date
-- [ ] number of comments
+- [x] title
+- [x] description
+- [x] photo
+- [x] date
+- [x] number of comments
 
 **Additional:**
 - [ ] number of views

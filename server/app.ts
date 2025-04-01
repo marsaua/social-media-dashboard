@@ -11,6 +11,7 @@ import requestLogger from "middlewares/requestLogger.middleware.ts";
 import authRoute from "routes/auth.route.ts";
 import usersRoute from "routes/users.route.ts";
 import postsRoute from "routes/posts.route.ts";
+import commentsRoute from "routes/comments.route.ts";
 
 connectDb();
 
@@ -26,9 +27,10 @@ app.use(requestLogger);
 app.use("/api/auth", authRoute);
 app.use("/api/users", verifyJWT, usersRoute);
 app.use("/api/posts", verifyJWT, postsRoute);
+app.use("/api/posts", verifyJWT, commentsRoute);
 
 app.use((req, res, next) => {
-  res.status(404).json({ error: "Endpoint not found" });
+  res.status(404).json({ message: "Endpoint not found" });
 });
 
 if (process.env.NODE_ENV === "production") {
