@@ -10,7 +10,8 @@ const getCurrentUser = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const user = await User.findById(userId).lean();
+    const user = await User.findById(userId, "-password -refreshToken").lean();
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
