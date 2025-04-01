@@ -1,13 +1,15 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Field, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import { User } from "@/store/types";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import { useLogInForm } from "@/store/useAutherization";
+import { InputItem } from "@/components/InputItem";
 
 export const LoginPage = () => {
-  const { handleSubmit, initialValues } = useLogInForm();
+  const { handleSubmit, initialValues, error } = useLogInForm();
+  console.log(error);
+
   const styles = {
     container: {
       position: "relative" as const,
@@ -41,8 +43,8 @@ export const LoginPage = () => {
       </Typography>
       <Formik initialValues={initialValues} onSubmit={(values: User) => handleSubmit(values)} style={styles.container}>
         <Form style={styles.form}>
-          <Field as={TextField} name="username" label="Username" />
-          <Field as={TextField} name="password" type="password" label="Password" />
+          <InputItem name="username" label="Username" error={error} />
+          <InputItem name="password" label="Password" error={error} />
 
           <Button type="submit" variant="contained">
             Submit

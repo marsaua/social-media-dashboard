@@ -12,11 +12,9 @@ export const useRegistration = () => {
     try {
       const result: { accessToken: string } = await fetchData("/auth/register", "POST", data, {}, true);
       return result;
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        throw new Error(error.message || "Register failed.");
-      }
-      throw new Error("Register failed.");
+    } catch (error: any) {
+      console.log("Full error:", error);
+      throw error;
     }
   };
 

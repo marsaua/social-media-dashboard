@@ -38,7 +38,11 @@ export const fetchData = async <T>(
   }
 
   if (!response.ok) {
-    throw responseData;
+    throw {
+      status: response.status,
+      error: responseData || "Request failed",
+      errors: responseData?.errors,
+    };
   }
 
   return responseData;

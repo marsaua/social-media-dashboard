@@ -1,13 +1,13 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Field, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import { useRegisterForm } from "@/store/useRegisterForm";
 import { User } from "@/store/types";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+import { InputItem } from "@/components/InputItem";
 
 export const RegistrationPage = () => {
-  const { handleSubmit, initialValues } = useRegisterForm();
+  const { handleSubmit, initialValues, error } = useRegisterForm();
   const styles = {
     container: {
       position: "relative" as const,
@@ -39,23 +39,13 @@ export const RegistrationPage = () => {
       <Typography variant="h1" sx={styles.title}>
         Registration
       </Typography>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values: User) => handleSubmit(values)}
-        style={styles.container}
-      >
+      <Formik initialValues={initialValues} onSubmit={(values: User) => handleSubmit(values)} style={styles.container}>
         <Form style={styles.form}>
-          <Field as={TextField} name="username" label="Username" />
-          <Field as={TextField} name="firstName" label="First Name" />
-          <Field as={TextField} name="lastName" label="Last Name" />
-          <Field as={TextField} name="avatar" label="Avatar" />
-          <Field
-            as={TextField}
-            name="password"
-            type="password"
-            label="Password"
-          />
-
+          <InputItem name="username" label="Username" error={error} />
+          <InputItem name="firstName" label="First Name" error={error} />
+          <InputItem name="lastName" label="Last Name" error={error} />
+          <InputItem name="avatar" label="Avatar" error={error} />
+          <InputItem name="password" label="Password" error={error} />
           <Button type="submit" variant="contained">
             Submit
           </Button>

@@ -15,11 +15,9 @@ export const useAutherization = () => {
     try {
       const result: { accessToken: string } = await fetchData("/auth/login", "POST", data);
       return result;
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        throw new Error(error.message || "Autherization failed.");
-      }
-      throw new Error("Autherization failed.");
+    } catch (error: any) {
+      console.log("Full error:", error);
+      throw error;
     }
   };
 
@@ -28,9 +26,12 @@ export const useAutherization = () => {
     onSuccess: (data) => {
       queryClient.setQueryData(["authToken"], data.accessToken);
       setAuth({ accessToken: data.accessToken });
-      console.log(data);
-
-      navigate(from, { replace: true });
+      navigate(from || "/home", { replace: true });
+    },
+    onError: (error) => {
+      console.log("MESSAGE:", error.message);
+      console.log("STATUS:", error.status);
+      console.log("VALIDATION ERRORS:", error.errors);
     },
   });
 
@@ -46,11 +47,8 @@ export const useLogInForm = () => {
     username: "",
     password: "",
   };
-  const navigate = useNavigate();
   const handleSubmit = (values: User) => {
     mutate(values);
-    navigate("/home");
-    console.log(values);
   };
 
   return {
