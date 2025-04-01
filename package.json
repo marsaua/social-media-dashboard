@@ -18,17 +18,9 @@
   ],
   "devDependencies": {
     "concurrently": "^9.1.2",
-    "eslint": "^9.23.0",
-    "eslint-plugin-react": "^7.37.4",
-    "globals": "^16.0.0",
-    "typescript": "^5.8.2",
-    "typescript-eslint": "^8.28.0"
+    "typescript": "^5.8.2"
   },
   "dependencies": {
-    "@tanstack/react-query": "4",
-    "formik": "^2.4.6",
-    "prettier": "^3.5.3",
-    "text-hex": "^1.0.0",
-    "zustand": "^5.0.3"
+    "prettier": "^3.5.3"
   }
 }

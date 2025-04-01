@@ -1,6 +1,9 @@
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import { useLogout } from "@/store/useLogout";
 
 interface LogoutModalProps {
   open: boolean;
@@ -19,20 +22,28 @@ export const LogoutModal = ({ open, onClose }: LogoutModalProps) => {
     boxShadow: 24,
     p: 4,
   };
+  const { logout } = useLogout();
+
+  const handleLogout = async () => {
+    await logout();
+  };
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
+    <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
       <Box sx={style}>
         <Typography id="modal-modal-title" variant="h6" component="h2">
-          Text in a modal
+          Are you sure you want to logout?
         </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          You will be logged out of your account.
         </Typography>
+        <Stack direction="row" spacing={2} justifyContent="center" mt={2}>
+          <Button onClick={onClose} color="secondary" variant="outlined">
+            Cancel
+          </Button>
+          <Button onClick={handleLogout} color="primary" variant="contained">
+            Logout
+          </Button>
+        </Stack>
       </Box>
     </Modal>
   );

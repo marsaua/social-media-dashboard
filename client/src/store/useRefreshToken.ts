@@ -4,6 +4,7 @@ import { useAuth } from "./useAuth";
 
 interface RefreshResponse {
   accessToken: string;
+  refreshToken: string;
 }
 
 const useRefreshToken = () => {
@@ -11,7 +12,7 @@ const useRefreshToken = () => {
 
   const refresh = async (): Promise<string> => {
     const response = await fetchData<RefreshResponse>("/auth/refresh-token", "POST", undefined, {}, true);
-    setAuth(response);
+    setAuth({ ...response, refreshToken: response.refreshToken });
     console.log(response);
     return response.accessToken;
   };

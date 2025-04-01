@@ -11,20 +11,20 @@ export const useAutherization = () => {
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
 
-  const registerUser = async (data: User) => {
+  const logInUser = async (data: User) => {
     try {
       const result: { accessToken: string } = await fetchData("/auth/login", "POST", data);
       return result;
     } catch (error: unknown) {
       if (error instanceof Error) {
-        throw new Error(error.message || "Register failed.");
+        throw new Error(error.message || "Autherization failed.");
       }
-      throw new Error("Register failed.");
+      throw new Error("Autherization failed.");
     }
   };
 
   const mutation = useMutation({
-    mutationFn: registerUser,
+    mutationFn: logInUser,
     onSuccess: (data) => {
       queryClient.setQueryData(["authToken"], data.accessToken);
       setAuth({ accessToken: data.accessToken });
@@ -39,19 +39,17 @@ export const useAutherization = () => {
   };
 };
 
-export const useRegisterForm = () => {
+export const useLogInForm = () => {
   const { mutate, isError, error, isSuccess } = useAutherization();
 
   const initialValues: User = {
     username: "",
     password: "",
-    firstName: "",
-    lastName: "",
-    avatar: "",
   };
-
+  const navigate = useNavigate();
   const handleSubmit = (values: User) => {
     mutate(values);
+    navigate("/home");
     console.log(values);
   };
 

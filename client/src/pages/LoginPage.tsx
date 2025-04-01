@@ -1,13 +1,13 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Field, Form, Formik } from "formik";
-import { useRegisterForm } from "@/store/useRegisterForm";
 import { User } from "@/store/types";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { useLogInForm } from "@/store/useAutherization";
 
 export const LoginPage = () => {
-  const { handleSubmit, initialValues } = useRegisterForm();
+  const { handleSubmit, initialValues } = useLogInForm();
   const styles = {
     container: {
       position: "relative" as const,
@@ -37,7 +37,7 @@ export const LoginPage = () => {
   return (
     <Box sx={styles.container}>
       <Typography variant="h1" sx={styles.title}>
-        Registration
+        Authorization
       </Typography>
       <Formik initialValues={initialValues} onSubmit={(values: User) => handleSubmit(values)} style={styles.container}>
         <Form style={styles.form}>
