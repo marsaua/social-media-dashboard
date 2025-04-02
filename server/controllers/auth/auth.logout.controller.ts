@@ -4,7 +4,7 @@ import User from "models/user.model.ts";
 import { refreshTokenCookieOptions } from "configs/auth.config.ts";
 
 export const logout = async (req: Request, res: Response) => {
-  const refreshToken = req.cookies.refreshToken;
+  const refreshToken = req.cookies.refresh_token;
 
   if (!refreshToken) {
     return res.status(204).json({ message: "No refresh token present." });

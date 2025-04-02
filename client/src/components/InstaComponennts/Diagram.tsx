@@ -1,4 +1,4 @@
-import { ResponsiveBar } from "@nivo/bar";
+import { ResponsiveBar, ComputedDatum } from "@nivo/bar";
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 
@@ -95,8 +95,8 @@ type Props = {
 export const Diagram: React.FC<Props> = ({ value }) => {
   const [selectedBar, setSelectedBar] = useState<string | null>("Apr");
   const theme = useTheme();
-  const handleChange = (bar) => {
-    setSelectedBar(bar.indexValue);
+  const handleChange = (bar: ComputedDatum<{ month: string; Followers: number; Following: number; Likes: number; Comments: number }>) => {
+    setSelectedBar(bar.indexValue as string);
   };
   return (
     <ResponsiveBar
@@ -125,7 +125,7 @@ export const Diagram: React.FC<Props> = ({ value }) => {
           id: "selectedPattern",
         },
       ]}
-      label={(d) => (selectedBar === d.indexValue ? d.value : "")}
+      label={(d) => (selectedBar === d.indexValue ? String(d.value) : "")}
       labelTextColor={theme.palette.primary.main}
       labelOffset={16}
       labelPosition="end"

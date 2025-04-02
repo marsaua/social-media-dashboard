@@ -6,7 +6,7 @@ import { Diagram } from "@/components/InstaComponennts/Diagram";
 
 export const DiagramTabs = () => {
   const [value, setValue] = useState("Followers");
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleChange = (_: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
   return (
