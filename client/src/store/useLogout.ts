@@ -1,11 +1,9 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/store/useAuth";
 import { fetchData } from "@/store/helpers";
 import { useCallback } from "react";
 
 export const useLogout = () => {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { setAuth } = useAuth();
 
@@ -16,10 +14,9 @@ export const useLogout = () => {
       console.error("Logout failed on server:", e);
     } finally {
       setAuth(null);
-      queryClient.removeQueries({ queryKey: ["authToken"] });
       navigate("/start/login");
     }
-  }, [queryClient, navigate, setAuth]);
+  }, [navigate, setAuth]);
 
   return { logout };
 };

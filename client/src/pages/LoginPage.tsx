@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Form, Formik } from "formik";
-import { User } from "@/store/types";
+import { LogInData } from "@/store/types";
 import Button from "@mui/material/Button";
 import { useLogInForm } from "@/store/useAutherization";
 import { InputItem } from "@/components/InputItem";
@@ -41,7 +41,11 @@ export const LoginPage = () => {
       <Typography variant="h1" sx={styles.title}>
         Authorization
       </Typography>
-      <Formik initialValues={initialValues} onSubmit={(values: User) => handleSubmit(values)} style={styles.container}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={(values: LogInData) => handleSubmit(values)}
+        style={styles.container}
+      >
         <Form style={styles.form}>
           <InputItem name="username" label="Username" error={error} />
           <InputItem name="password" label="Password" error={error} />

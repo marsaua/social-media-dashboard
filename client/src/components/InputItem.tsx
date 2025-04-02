@@ -1,4 +1,5 @@
 import TextField from "@mui/material/TextField";
+import { useField } from "formik";
 
 interface InputItemProps {
   name: string;
@@ -8,8 +9,11 @@ interface InputItemProps {
 }
 
 export const InputItem = ({ name, label, error }: InputItemProps) => {
+  const [field] = useField(name);
   const errorItem = error?.errors?.[name];
   const errorMessage = Array.isArray(errorItem) ? errorItem.join(", ") : errorItem;
 
-  return <TextField name={name} label={label} variant="outlined" error={!!errorItem} helperText={errorMessage} />;
+  return (
+    <TextField {...field} name={name} label={label} variant="outlined" error={!!errorItem} helperText={errorMessage} />
+  );
 };

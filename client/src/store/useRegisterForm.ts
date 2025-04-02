@@ -1,18 +1,17 @@
-import { useQueryClient, useMutation } from "@tanstack/react-query";
-import { User } from "@/store/types";
+import { useMutation } from "@tanstack/react-query";
+import { RegisterData } from "@/store/types";
 import { fetchData } from "./helpers";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./useAuth";
 
 export const useRegistration = () => {
   const { setAuth } = useAuth();
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const registerUser = async (data: User) => {
+  const registerUser = async (data: RegisterData) => {
     try {
       const result: { accessToken: string } = await fetchData("/auth/register", "POST", data, {}, true);
       return result;
-    } catch (error: any) {
+    } catch (error) {
       console.log("Full error:", error);
       throw error;
     }
@@ -21,7 +20,6 @@ export const useRegistration = () => {
   const mutation = useMutation({
     mutationFn: registerUser,
     onSuccess: (data) => {
-      queryClient.setQueryData(["authToken"], data.accessToken);
       setAuth({ accessToken: data.accessToken });
       console.log(data);
 
@@ -37,7 +35,7 @@ export const useRegistration = () => {
 export const useRegisterForm = () => {
   const { mutate, isError, error, isSuccess } = useRegistration();
 
-  const initialValues: User = {
+  const initialValues: RegisterData = {
     username: "",
     password: "",
     firstName: "",
@@ -45,7 +43,7 @@ export const useRegisterForm = () => {
     avatar: "",
   };
 
-  const handleSubmit = (values: User) => {
+  const handleSubmit = (values: RegisterData) => {
     mutate(values);
     console.log(values);
   };

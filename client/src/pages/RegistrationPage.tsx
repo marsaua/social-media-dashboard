@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Form, Formik } from "formik";
 import { useRegisterForm } from "@/store/useRegisterForm";
-import { User } from "@/store/types";
+import { RegisterData } from "@/store/types";
 import Button from "@mui/material/Button";
 import { InputItem } from "@/components/InputItem";
 
@@ -39,7 +39,11 @@ export const RegistrationPage = () => {
       <Typography variant="h1" sx={styles.title}>
         Registration
       </Typography>
-      <Formik initialValues={initialValues} onSubmit={(values: User) => handleSubmit(values)} style={styles.container}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={(values: RegisterData) => handleSubmit(values)}
+        style={styles.container}
+      >
         <Form style={styles.form}>
           <InputItem name="username" label="Username" error={error} />
           <InputItem name="firstName" label="First Name" error={error} />
