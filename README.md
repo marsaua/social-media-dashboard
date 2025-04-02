@@ -20,10 +20,11 @@ A lightweight social media dashboard where users can track analytics from variou
 
 #### Frontend
 
-- ...
+- Confirm password logic
 
 #### Backend
 
+- Confirm password logic 
 - Sanitization
 - Environment Variable Validation 
 - Routes protection
