@@ -3,7 +3,7 @@ import { z } from "zod";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-import { authSchema } from "schemas/auth.schema.ts";
+import authSchema from "schemas/auth.schema.ts";
 import User from "models/user.model.ts";
 import {
   ACCESS_TOKEN_EXPIRES_IN,

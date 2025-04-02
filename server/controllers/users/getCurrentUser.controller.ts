@@ -1,26 +1,24 @@
 import { Request, Response } from "express";
 
-import User, { PUBLIC_USER_FIELDS } from "models/user.model.ts";
+import User from "models/user.model.ts";
 
 const getCurrentUser = async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
 
     if (!userId) {
-      return res.status(401).json({ error: "Unauthorized" });
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const user = await User.findById(userId).select(PUBLIC_USER_FIELDS);
+    const user = await User.findById(userId, "-password -refreshToken").lean();
+
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
 
     res.status(200).json(user);
   } catch (error) {
-    if (error instanceof Error) {
-      console.error("Error fetching user data:", error.message);
-      res.status(500).json({ error: "Failed to fetch user data" });
-    }
+    res.status(500).json({ message: "An unexpected error occurred." });
   }
 };
 

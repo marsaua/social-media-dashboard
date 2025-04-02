@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const authSchema = {
+const authSchema = {
   register: z.object({
     username: z
       .string()
@@ -15,16 +15,30 @@ export const authSchema = {
       .min(8, "Password must be at least 8 characters long")
       .max(64, "Password must not exceed 64 characters")
       .regex(
-        /^(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{8,}$/,
-        "Password must include at least one number and one special character",
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*()\-_+=<>/]).{8,}$/,
+        "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character",
+      )
+      .refine(
+        (password) => !/(.)\1\1/.test(password),
+        "Password must not contain three or more repeated characters",
       ),
     firstName: z
       .string()
       .min(1, "First name is required")
-      .max(50, "First name must not exceed 50 characters"),
+      .max(50, "First name must not exceed 50 characters")
+      .regex(
+        /^[a-zA-ZÀ-ÿ' -]+$/,
+        "First name can only contain alphabetic characters, spaces, hyphens, or apostrophes",
+      )
+      .trim(),
     lastName: z
       .string()
-      .max(50, "Last name must not exceed 50 characters")
+      .max(50, "First name must not exceed 50 characters")
+      .regex(
+        /^[a-zA-ZÀ-ÿ' -]+$/,
+        "Last name can only contain alphabetic characters, spaces, hyphens, or apostrophes",
+      )
+      .trim()
       .optional(),
   }),
 
@@ -42,12 +56,10 @@ export const authSchema = {
       .min(8, "Password must be at least 8 characters long")
       .max(64, "Password must not exceed 64 characters")
       .regex(
-        /^(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{8,}$/,
-        "Password must include at least one number and one special character",
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*()\-_+=<>/]).{8,}$/,
+        "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character",
       ),
   }),
-
-  refreshToken: z.object({
-    refreshToken: z.string(),
-  }),
 };
+
+export default authSchema;

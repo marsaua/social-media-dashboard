@@ -1,8 +1,10 @@
 openapi: 3.0.0
+
 info:
   title: Social Media Dashboard API
   version: 1.0.0
   description: API documentation for the Social Media Dashboard project
+
 components:
   securitySchemes:
     bearerAuth:
@@ -42,7 +44,91 @@ components:
           type: string
           format: url
           description: "URL for the user's avatar."
+    Post:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "The unique ID of the post."
+        title:
+          type: string
+          description: "The title of the post."
+          example: "My First Post"
+        description:
+          type: string
+          description: "The description of the post."
+          example: "This is the description of my first post."
+        image:
+          type: string
+          format: url
+          description: "The URL of the post's image. Optional."
+          example: "http://example.com/image.jpg"
+        userId:
+          type: string
+          description: "The ID of the user who created the post."
+          example: "6389a1234b78912345678abc"
+        totalComments:
+          type: integer
+          description: "The total number of comments for this post."
+          example: 5
+        createdAt:
+          type: string
+          format: date-time
+          description: "The timestamp when the post was created."
+          example: "2023-01-01T10:00:00Z"
+        updatedAt:
+          type: string
+          format: date-time
+          description: "The timestamp when the post was last updated."
+          example: "2023-01-02T14:00:00Z"
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "The unique ID of the comment."
+          example: "6352fb3793f23412347a98bf"
+        text:
+          type: string
+          description: "The content of the comment."
+          example: "This is a comment for the post."
+        postId:
+          type: string
+          description: "The ID of the post to which this comment belongs."
+          example: "6352fb3793f23412347a98bc"
+        userId:
+          type: string
+          description: "The ID of the user who created the comment."
+          example: "6389a1234b78912345678abc"
+        createdAt:
+          type: string
+          format: date-time
+          description: "The timestamp when the comment was created."
+          example: "2023-01-01T10:00:00Z"
+        updatedAt:
+          type: string
+          format: date-time
+          description: "The timestamp when the comment was last updated."
+          example: "2023-01-02T14:00:00Z"
+
   responses:
+    400ValidationError:
+      description: "Validation failed"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Validation failed."
+              errors:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: string
+                    example: "Field must not be empty."
     500UnexpectedError:
       description: "An unexpected error occurred"
       content:
@@ -56,8 +142,10 @@ components:
 
 security:
   - bearerAuth: [ ]
+
 servers:
   - url: http://localhost:8080
+
 paths:
   /api/auth/register:
     post:
@@ -79,28 +167,14 @@ paths:
               schema:
                 type: object
                 properties:
-                  message:
+                  accessToken:
                     type: string
-                    example: "User created successfully."
+                    description: "Access token for authentication."
         '400':
-          description: "Validation failed"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Validation failed."
-                  errors:
-                    type: object
-                    additionalProperties:
-                      type: array
-                      items:
-                        type: string
-                        example: "Field must not be empty."
+          $ref: "#/components/responses/400ValidationError"
         '500':
           $ref: "#/components/responses/500UnexpectedError"
+
   /api/auth/login:
     post:
       summary: "Login user"
@@ -141,22 +215,7 @@ paths:
                     type: string
                     description: "Access token for authentication."
         '400':
-          description: "Validation failed"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Validation failed."
-                  errors:
-                    type: object
-                    additionalProperties:
-                      type: array
-                      items:
-                        type: string
-                        example: "Field must not be empty."
+          $ref: "#/components/responses/400ValidationError"
         '401':
           description: "Unauthorized"
           content:
@@ -169,6 +228,8 @@ paths:
                     example: "Invalid credentials."
         '500':
           $ref: "#/components/responses/500UnexpectedError"
+
+  # Auth
   /api/auth/logout:
     post:
       summary: "Log out user"
@@ -198,6 +259,7 @@ paths:
                     example: "No refresh token present."
         '500':
           $ref: "#/components/responses/500UnexpectedError"
+
   /api/auth/refresh-token:
     post:
       summary: "Refresh access token"
@@ -237,6 +299,7 @@ paths:
                     description: "nvalid refresh token or user not found."
         '500':
           $ref: "#/components/responses/500UnexpectedError"
+
   /api/users/current:
     get:
       summary: Get current user
@@ -281,7 +344,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  error:
+                  message:
                     type: string
                     description: The error message.
                     example: "Unauthorized"
@@ -292,7 +355,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  error:
+                  message:
                     type: string
                     description: The error message.
                     example: "User not found."
@@ -366,26 +429,7 @@ paths:
                     format: url
                     description: URL for the user's avatar.
         '400':
-          description: Validation error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Validation failed.
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        field:
-                          type: string
-                          example: firstName
-                        message:
-                          type: string
-                          example: "First name is required."
+          $ref: "#/components/responses/400ValidationError"
         '404':
           description: User not found
           content:
@@ -393,8 +437,486 @@ paths:
               schema:
                 type: object
                 properties:
-                  error:
+                  message:
                     type: string
                     example: "User not found."
+        '500':
+          $ref: "#/components/responses/500UnexpectedError"
+
+  # Posts
+  /api/posts:
+    post:
+      summary: "Create a new post"
+      description: "Endpoint to create a new post"
+      tags:
+        - Posts
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+                  description: "Title of the post. Required."
+                description:
+                  type: string
+                  minLength: 1
+                  maxLength: 500
+                  description: "Description of the post. Required."
+                image:
+                  type: string
+                  format: binary
+                  description: "Image file to be uploaded for the post. Optional."
+      responses:
+        '201':
+          description: "Post created successfully"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: "The ID of the newly created post."
+                  title:
+                    type: string
+                    description: "The title of the post."
+                  description:
+                    type: string
+                    description: "The description of the post."
+                  image:
+                    type: string
+                    description: "The URL of the uploaded image (if present)."
+                  userId:
+                    type: string
+                    description: "The ID of the user who created the post."
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: "The timestamp when the post was created."
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    description: "The timestamp when the post was last updated."
+        '400':
+          $ref:  "#/components/responses/400ValidationError"
+        '500':
+          $ref: "#/components/responses/500UnexpectedError"
+
+  /api/posts/user/{userId}:
+    get:
+      summary: "Retrieve all posts for a specific user"
+      description: |
+        Retrieve a list of posts created by a specific user. Supports optional pagination using `page` and `limit` query parameters.
+        - If `page` and `limit` are provided, the endpoint returns a paginated list of posts, along with metadata (`currentPage`, `totalPages`, and `totalPosts`).
+        - If `page` and `limit` are not provided, all posts for the user are returned.
+      tags:
+        - Posts
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: "The unique ID of the user whose posts you want to retrieve."
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          description: "Page number for pagination. Must be positive if provided."
+          schema:
+            type: integer
+            example: 1
+            minimum: 1
+        - name: limit
+          in: query
+          required: false
+          description: "Number of posts per page for pagination. Must be positive if provided."
+          schema:
+            type: integer
+            example: 10
+            minimum: 1
+      responses:
+        '200':
+          description: "Successfully retrieved posts"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Post'
+                  currentPage:
+                    type: integer
+                    description: "The current page number in the paginated response."
+                    example: 1
+                  totalPages:
+                    type: integer
+                    description: "The total number of pages available for pagination."
+                    example: 5
+                  totalPosts:
+                    type: integer
+                    description: "The total number of posts available for the user."
+                    example: 50
+        '400':
+          description: "Invalid or missing user ID parameter"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "User ID is required."
+        '500':
+          $ref: "#/components/responses/500UnexpectedError"
+
+  /api/posts/{postId}:
+    get:
+      summary: "Get a single post by ID"
+      description: "Retrieve detailed information about a specific post by its unique ID."
+      tags:
+        - Posts
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          description: "The unique ID of the post to retrieve."
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "Successfully retrieved the post"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '404':
+          description: "Post not found"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Post not found."
+        '500':
+          $ref: "#/components/responses/500UnexpectedError"
+
+    delete:
+      summary: "Delete a single post by ID"
+      description: "Delete a specific post by its unique ID. Only the post owner can delete the post."
+      tags:
+        - Posts
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          description: "The unique ID of the post to be deleted."
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "Post deleted successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '401':
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Unauthorized."
+        '403':
+          description: "Forbidden"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "You are not authorized to perform this action."
+        '404':
+          description: "Post not found"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Post not found."
+        '500':
+          $ref: "#/components/responses/500UnexpectedError"
+
+    patch:
+      summary: "Update an existing post"
+      description: "Endpoint to update the details of an existing post."
+      tags:
+        - Posts
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          description: "The ID of the post to be updated"
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+                  description: "Updated title of the post (optional)."
+                description:
+                  type: string
+                  minLength: 1
+                  maxLength: 500
+                  description: "Updated description of the post (optional)."
+                image:
+                  type: string
+                  format: binary
+                  description: "Image file to update the post's image (optional)."
+      responses:
+        '200':
+          description: "Post updated successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '400':
+          $ref: "#/components/responses/400ValidationError"
+        '404':
+          description: "Post not found"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Post not found."
+        '500':
+          $ref: "#/components/responses/500UnexpectedError"
+
+  # Post comments
+  /api/posts/{postId}/comments:
+    get:
+      summary: "Retrieve comments for a post"
+      description: "Get all comments associated with a specific post."
+      tags:
+        - Comments
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          description: "The ID of the post to retrieve comments for."
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "List of comments for the given post."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  comments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Comment'
+        '400':
+          description: "Bad request - Post ID is required."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Post ID is required."
+        '500':
+          $ref: "#/components/responses/500UnexpectedError"
+
+    post:
+      summary: "Add a new comment to a post"
+      description: "Create a new comment for a specific post."
+      tags:
+        - Comments
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          description: "The ID of the post to add a comment to."
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: "The text of the comment."
+                  example: "This is my comment."
+      responses:
+        '201':
+          description: "Comment created successfully."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  comment:
+                    $ref: '#/components/schemas/Comment'
+        '400':
+          description: "Bad request - Missing or invalid parameters."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Validation failed."
+                  errors:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+                        example: "Field must not be empty."
+        '500':
+          $ref: "#/components/responses/500UnexpectedError"
+
+  /api/posts/{postId}/comments/{commentId}:
+    patch:
+      summary: "Update a comment"
+      description: "Update the text of a comment associated with a specific post."
+      tags:
+        - Comments
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          description: "The ID of the post associated with the comment."
+          schema:
+            type: string
+        - name: commentId
+          in: path
+          required: true
+          description: "The ID of the comment to update."
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: "The updated text of the comment."
+                  example: "This is the updated comment text."
+      responses:
+        '200':
+          description: "Comment updated successfully."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '400':
+          $ref: "#/components/responses/400ValidationError"
+        '403':
+          description: "Forbidden"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Forbidden - User does not have permission to delete this comment."
+        '404':
+          description: "Comment not found."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Comment not found."
+        '500':
+          $ref: "#/components/responses/500UnexpectedError"
+
+    delete:
+      summary: "Delete an existing comment"
+      description: "Delete a specific comment associated with a post."
+      tags:
+        - Comments
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          description: "The ID of the post associated with this comment."
+          schema:
+            type: string
+        - name: commentId
+          in: path
+          required: true
+          description: "The ID of the comment to delete."
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "Comment deleted successfully."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  comment:
+                    $ref: '#/components/schemas/Comment'
+        '403':
+          description: "Unauthorized - User does not have permission to delete the comment."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "You do not have permission to delete this comment."
+        '404':
+          description: "Comment not found."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Comment not found."
         '500':
           $ref: "#/components/responses/500UnexpectedError"

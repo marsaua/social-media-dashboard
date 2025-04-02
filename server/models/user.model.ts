@@ -9,8 +9,6 @@ type UserModel = Document & {
   refreshToken: string | null;
 };
 
-export const PUBLIC_USER_FIELDS = "username firstName lastName avatar";
-
 const { Schema } = mongoose;
 
 const userSchema = new Schema<UserModel>(
