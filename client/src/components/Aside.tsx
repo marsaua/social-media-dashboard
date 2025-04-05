@@ -73,10 +73,10 @@ export const Aside = () => {
         <AsideItem value="instagram" title="Instagram" onClick={() => navigate("/instagram")}>
           <InstagramIcon />
         </AsideItem>
-        <AsideItem value="twitter" title="Twitter" onClick={() => navigate("/twitter")}>
+        <AsideItem value="users" title="Users" onClick={() => navigate("/users")}>
           <XIcon />
         </AsideItem>
-        <AsideItem value="facebook" title="Facebook" onClick={() => navigate("/facebook")}>
+        <AsideItem value="my-posts" title="My Posts" onClick={() => navigate("/my-posts")}>
           <FacebookIcon />
         </AsideItem>
         <AsideItem value="youtube" title="Youtube" onClick={() => navigate("/youtube")}>

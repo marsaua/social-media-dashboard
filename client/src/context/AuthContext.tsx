@@ -1,7 +1,10 @@
-import { Auth, AuthContextType } from "@/store/types";
+import type { Auth, AuthContextType } from "@/store/types";
 import { createContext, useState } from "react";
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType>({
+  auth: null,
+  setAuth: () => {},
+});
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [auth, setAuth] = useState<Auth | null>(null);

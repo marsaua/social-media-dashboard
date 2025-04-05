@@ -1,13 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import type { RegisterData } from "@/store/types";
 import { fetchData } from "./helpers";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "./useAuth";
 
-export const useRegistration = () => {
-  const { setAuth } = useAuth();
-  const navigate = useNavigate();
-  const registerUser = async (data: RegisterData) => {
+export const useUsers = () => {
+  const registerUser = async (data: getUsers) => {
     try {
       const result: { accessToken: string } = await fetchData("/auth/register", "POST", data, {}, true);
       return result;

@@ -3,8 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import { HomePage } from "@/pages/HomePage.tsx";
 import { Layout } from "@/components/Layout/Layout.tsx";
 import { InstagramPage } from "@/pages/InstagramPage.tsx";
-import { TwitterPage } from "@/pages/TwitterPage.tsx";
-import { FacebookPage } from "@/pages/FacebookPage.tsx";
 import { YoutubePage } from "@/pages/YoutubePage.tsx";
 import { StatisticPage } from "@/pages/StatisticPage.tsx";
 import { DashboardPage } from "@/pages/Dashboard.tsx";
@@ -19,6 +17,8 @@ import { PersistLogin } from "./pages/PersistLogin";
 import { LayoutApp } from "./components/Layout/LayoutApp";
 import { RequireAuth } from "./components/RequireAuth";
 import { MissingPage } from "./pages/MissingPage";
+import { UsersPage } from "./pages/UsersPage";
+import { MyPostsPage } from "./pages/MyPostsPage";
 
 export const AppRouters = () => {
   return (
@@ -38,8 +38,8 @@ export const AppRouters = () => {
               <Route path="/" element={<Layout />}>
                 <Route path="home" element={<HomePage />} />
                 <Route path="instagram" element={<InstagramPage />} />
-                <Route path="twitter" element={<TwitterPage />} />
-                <Route path="facebook" element={<FacebookPage />} />
+                <Route path="users" element={<UsersPage />} />
+                <Route path="my-posts" element={<MyPostsPage />} />
                 <Route path="youtube" element={<YoutubePage />} />
                 <Route path="statistic" element={<StatisticPage />} />
                 <Route path="dashboard" element={<DashboardPage />} />
