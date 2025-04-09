@@ -21,8 +21,6 @@ export const useRegistration = () => {
     mutationFn: registerUser,
     onSuccess: (data) => {
       setAuth({ accessToken: data.accessToken });
-      console.log(data);
-
       navigate("/home");
     },
   });
@@ -45,7 +43,6 @@ export const useRegisterForm = () => {
 
   const handleSubmit = (values: RegisterData) => {
     mutate(values);
-    console.log(values);
   };
 
   return {

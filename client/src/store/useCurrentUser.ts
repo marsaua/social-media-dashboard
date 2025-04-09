@@ -1,18 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "./helpers";
 import { useAuth } from "./useAuth";
-import type { User } from "./types";
 
-export const useUsers = () => {
+export type CurrentUser = {
+  id: string;
+  username: string;
+  firstName?: string;
+  lastName?: string;
+  avatar?: string;
+};
+
+export const useCurrentUser = () => {
   const { auth } = useAuth();
-
   return useQuery({
-    queryKey: ["users"],
+    queryKey: ["currentUser"],
     enabled: !!auth?.accessToken,
     retry: false,
-    queryFn: async (): Promise<User[]> => {
+    queryFn: async (): Promise<CurrentUser[]> => {
       const response = await fetchData(
-        "/users",
+        "/users/current",
         "GET",
         {},
         {
@@ -20,7 +26,7 @@ export const useUsers = () => {
         },
       );
       console.log("RESPONSE:", response);
-      return response as User[];
+      return response as CurrentUser[];
     },
   });
 };

@@ -20,19 +20,14 @@ export const PersistLogin = () => {
     };
 
     if (!auth?.accessToken) {
-      console.log("refresh");
-
       verifyRefreshToken();
     } else {
-      console.log("not refresh");
-
       setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
     console.log("isLoading", isLoading);
-    console.log("auth", JSON.stringify(auth?.accessToken));
   }, [isLoading]);
 
   return isLoading ? <div>Loading...</div> : <Outlet />;
