@@ -176,7 +176,7 @@ export const Diagram: React.FC<Props> = ({ value }) => {
       }}
       role="application"
       ariaLabel="Statistic"
-      barAriaLabel={(e) => e.id + ": " + e.formattedValue + " in month: " + e.indexValue}
+      barAriaLabel={(e) => `${e.id}: ${e.formattedValue} in month: ${e.indexValue}`}
     />
   );
 };
