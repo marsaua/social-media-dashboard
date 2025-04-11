@@ -4,21 +4,27 @@ export const formatAmount = (amount: number) => {
 
 export const fetchData = async <T>(
   endpoint: string,
-  method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
+  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" = "GET",
   body?: any,
   headers: Record<string, string> = {},
   credentials = true,
 ): Promise<T> => {
+  const isFormData = typeof FormData !== "undefined" && body instanceof FormData;
+
+  const finalHeaders: Record<string, string> = isFormData
+    ? headers // don't override Content-Type for FormData
+    : {
+        "Content-Type": "application/json",
+        ...headers,
+      };
+
   const options: RequestInit = {
     method,
-    headers: {
-      "Content-Type": "application/json",
-      ...headers,
-    },
+    headers: finalHeaders,
   };
 
   if (method !== "GET" && body !== undefined) {
-    options.body = JSON.stringify(body);
+    options.body = isFormData ? body : JSON.stringify(body);
   }
 
   if (credentials) {
@@ -26,8 +32,8 @@ export const fetchData = async <T>(
   }
 
   const response = await fetch(`http://localhost:8080/api${endpoint}`, options);
-  let responseData;
 
+  let responseData;
   try {
     responseData = await response.json();
   } catch (parseError) {

@@ -28,3 +28,8 @@ export type RegisterData = {
   lastName?: string;
   avatar?: string;
 };
+export type Post = {
+  description: string;
+  title: string;
+  image?: File | null;
+};

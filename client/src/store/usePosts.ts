@@ -3,7 +3,11 @@ import { fetchData } from "./helpers";
 import { useAuth } from "./useAuth";
 import { useCurrentUser } from "./useCurrentUser";
 
-export type Post = {};
+export type Post = {
+  description: string;
+  title: string;
+  image: File;
+};
 
 export const usePosts = () => {
   const { auth } = useAuth();
