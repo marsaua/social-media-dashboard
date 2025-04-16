@@ -16,6 +16,9 @@ export const useEditPost = (onClose: () => void, post) => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       onClose();
     },
+    onError: (error) => {
+      console.log(error.message);
+    },
   });
 
   const handleSubmit = async (values: Post) => {

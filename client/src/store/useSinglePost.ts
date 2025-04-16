@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
+import type { Post } from "./types";
 import { fetchData } from "./helpers";
 import { useAuth } from "./useAuth";
-import type { User } from "./types";
 
-export const useCurrentUser = () => {
+export const useSinglePost = (postId: string) => {
   const { auth } = useAuth();
-  const fetchUser = async (): Promise<User> => {
+  const fetchPost = async (): Promise<Post> => {
     const response = await fetchData(
-      "/users/current",
+      `/posts/${postId}`,
       "GET",
       {},
       {
@@ -15,12 +15,11 @@ export const useCurrentUser = () => {
       },
     );
     console.log("RESPONSE:", response);
-    return response as User;
+    return response as Post;
   };
   return useQuery({
-    queryKey: ["currentUser"],
-    enabled: !!auth?.accessToken,
+    queryKey: ["singlePost"],
     retry: false,
-    queryFn: fetchUser,
+    queryFn: fetchPost,
   });
 };

@@ -19,6 +19,7 @@ import { RequireAuth } from "./components/RequireAuth";
 import { MissingPage } from "./pages/MissingPage";
 import { UsersPage } from "./pages/UsersPage";
 import { MyPostsPage } from "./pages/MyPostsPage";
+import { SinglePostPage } from "./pages/SinglePostsPage";
 
 export const AppRouters = () => {
   return (
@@ -40,6 +41,7 @@ export const AppRouters = () => {
                 <Route path="instagram" element={<InstagramPage />} />
                 <Route path="users" element={<UsersPage />} />
                 <Route path="my-posts" element={<MyPostsPage />} />
+                <Route path="my-posts/:postId" element={<SinglePostPage />} />
                 <Route path="youtube" element={<YoutubePage />} />
                 <Route path="statistic" element={<StatisticPage />} />
                 <Route path="dashboard" element={<DashboardPage />} />

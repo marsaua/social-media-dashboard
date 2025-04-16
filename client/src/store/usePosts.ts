@@ -21,7 +21,7 @@ export const usePosts = () => {
     retry: false,
     queryFn: async (): Promise<Post[]> => {
       const response = await fetchData(
-        `/posts/user/${id}`,
+        `/posts/user/${id}?_limit=2&_page=2`,
         "GET",
         {},
         { Authorization: `Bearer ${auth?.accessToken}` },

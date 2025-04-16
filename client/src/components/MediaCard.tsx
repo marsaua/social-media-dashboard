@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import { useRef, useState, useEffect } from "react";
 import { EditPost } from "./EditPost";
 import { DeletePost } from "./DeletePost";
+import { Link } from "react-router-dom";
 
 export default function MediaCard({ post }) {
   const { image, description, title } = post;
@@ -25,32 +26,34 @@ export default function MediaCard({ post }) {
 
   return (
     <Card sx={{ maxWidth: 345, display: "flex", flexDirection: "column" }}>
-      <CardMedia sx={{ height: 140 }} image={image ? image : "./no-image.png"} title={title} />
-      <CardContent sx={{ flexGrow: 1 }}>
-        <Typography gutterBottom variant="h5" component="div">
-          {title}
-        </Typography>
+      <Link to={`/my-posts/${post._id}`}>
+        <CardMedia sx={{ height: 140 }} image={image ? image : "./no-image.png"} title={title} />
+        <CardContent sx={{ flexGrow: 1 }}>
+          <Typography gutterBottom variant="h5" component="div">
+            {title}
+          </Typography>
 
-        <Typography
-          ref={descriptionRef}
-          variant="body2"
-          sx={{
-            color: "text.secondary",
-            display: "-webkit-box",
-            WebkitBoxOrient: "vertical",
-            WebkitLineClamp: expanded ? "none" : 10,
-            overflow: "hidden",
-          }}
-        >
-          {description}
-        </Typography>
+          <Typography
+            ref={descriptionRef}
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              display: "-webkit-box",
+              WebkitBoxOrient: "vertical",
+              WebkitLineClamp: expanded ? "none" : 10,
+              overflow: "hidden",
+            }}
+          >
+            {description}
+          </Typography>
 
-        {isClamped && (
-          <Button size="small" onClick={toggleExpanded}>
-            {expanded ? "Show less" : "Show more"}
-          </Button>
-        )}
-      </CardContent>
+          {isClamped && (
+            <Button size="small" onClick={toggleExpanded}>
+              {expanded ? "Show less" : "Show more"}
+            </Button>
+          )}
+        </CardContent>
+      </Link>
       <CardActions>
         <DeletePost post={post} />
         <EditPost post={post} />
