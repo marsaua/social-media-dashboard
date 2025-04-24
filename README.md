@@ -16,6 +16,7 @@ A lightweight social media dashboard where users can track analytics from variou
 - CI/CD
 - PlantUML diagrams
 - Containerization
+- file names linting?
 - SonarQube?
 
 #### Frontend
@@ -35,6 +36,8 @@ A lightweight social media dashboard where users can track analytics from variou
 - Testing
 - Compression
 - Database Query Optimization
+- Update local postgres version
+- Nests.js Microservices
 
 ### APP FEATURES
 
