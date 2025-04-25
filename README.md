@@ -27,8 +27,7 @@ A lightweight social media dashboard where users can track analytics from variou
 
 - Confirm password logic 
 - Sanitization
-- Environment Variable Validation 
-- Routes protection
+- Role-based auth (https://docs.nestjs.com/guards#role-based-authentication)
 - Data Storage (Redis)
 - Traffic Management
 - Cron Jobs
@@ -38,6 +37,7 @@ A lightweight social media dashboard where users can track analytics from variou
 - Database Query Optimization
 - Update local postgres version
 - Nests.js Microservices
+- Rewrite auth to passport?
 
 ### APP FEATURES
 

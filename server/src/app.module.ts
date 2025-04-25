@@ -5,12 +5,13 @@ import { UsersModule } from "./modules/users/users.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { AuthModule } from "./modules/auth/auth.module";
-import appConfig from "src/config/app.config";
+import appConfig, { ENV } from "src/config/app.config";
 import dbConfig from "src/config/db.config";
 import environmentValidation from "src/config/environment.validation";
-import { APP_INTERCEPTOR } from "@nestjs/core";
-
-const ENV = process.env.NODE_ENV;
+import { APP_GUARD, APP_INTERCEPTOR } from "@nestjs/core";
+import { AuthGuard } from "src/modules/auth/guards/auth.guard";
+import jwtConfig from "src/modules/auth/config/jwt.config";
+import { JwtModule } from "@nestjs/jwt";
 
 @Module({
   imports: [
@@ -36,10 +37,16 @@ const ENV = process.env.NODE_ENV;
         username: configService.get("db.username"),
       }),
     }),
+    ConfigModule.forFeature(jwtConfig),
+    JwtModule.registerAsync(jwtConfig.asProvider()),
   ],
   controllers: [AppController],
   providers: [
     AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
     {
       provide: APP_INTERCEPTOR,
       useClass: ClassSerializerInterceptor,

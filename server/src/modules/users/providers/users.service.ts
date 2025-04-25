@@ -24,8 +24,22 @@ export class UsersService {
     return user;
   }
 
+  public async updateOne(userId: number, data: Partial<User>) {
+    await this.usersRepository.update(userId, data);
+  }
+
   public async findOneByUsername(username: string) {
     const user = await this.usersRepository.findOneBy({ username });
+
+    if (!user) {
+      throw new BadRequestException("User not found");
+    }
+
+    return user;
+  }
+
+  public async findOneByRefreshToken(refreshToken: string) {
+    const user = await this.usersRepository.findOneBy({ refreshToken });
 
     if (!user) {
       throw new BadRequestException("User not found");

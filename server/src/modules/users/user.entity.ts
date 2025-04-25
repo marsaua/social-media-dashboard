@@ -34,5 +34,13 @@ export class User {
     length: 96,
     nullable: true,
   })
-  lastName: string;
+  lastName?: string;
+
+  @Column({
+    type: "varchar",
+    length: 512,
+    nullable: true,
+  })
+  @Exclude()
+  refreshToken?: string;
 }
