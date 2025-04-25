@@ -1,5 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { Exclude } from 'class-transformer';
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Exclude } from "class-transformer";
 
 @Entity()
 export class User {
@@ -7,7 +7,7 @@ export class User {
   id: number;
 
   @Column({
-    type: 'varchar',
+    type: "varchar",
     length: 96,
     nullable: false,
     unique: true,
@@ -15,7 +15,7 @@ export class User {
   username: string;
 
   @Column({
-    type: 'varchar',
+    type: "varchar",
     length: 96,
     nullable: false,
   })
@@ -23,14 +23,14 @@ export class User {
   password: string;
 
   @Column({
-    type: 'varchar',
+    type: "varchar",
     length: 96,
     nullable: false,
   })
   firstName: string;
 
   @Column({
-    type: 'varchar',
+    type: "varchar",
     length: 96,
     nullable: true,
   })

@@ -1,9 +1,7 @@
-import * as Joi from 'joi';
+import * as Joi from "joi";
 
 export default Joi.object({
-  NODE_ENV: Joi.string()
-    .valid('development', 'production', 'test', 'staging')
-    .default('development'),
+  NODE_ENV: Joi.string().valid("development", "production", "test", "staging").default("development"),
   DATABASE_PORT: Joi.number().port().default(5432),
   DATABASE_USERNAME: Joi.string().required(),
   DATABASE_PASSWORD: Joi.string().required(),
