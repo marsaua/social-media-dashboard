@@ -1,3 +1,5 @@
+import { globalPrefix } from "server/src/config/app.config.ts";
+
 export const formatAmount = (amount: number) => {
   return Math.abs(amount).toLocaleString("en-US", {});
 };
@@ -24,7 +26,7 @@ export const fetchData = async <T>(
     options.credentials = "include";
   }
 
-  const response = await fetch(`http://localhost:8080/api${endpoint}`, options);
+  const response = await fetch(`http://localhost:8080/${globalPrefix}${endpoint}`, options);
   let responseData;
 
   try {

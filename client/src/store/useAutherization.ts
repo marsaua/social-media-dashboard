@@ -12,7 +12,7 @@ export const useAutherization = () => {
 
   const logInUser = async (data: LogInData) => {
     try {
-      const result: { accessToken: string } = await fetchData("/auth/login", "POST", data);
+      const result: { accessToken: string } = await fetchData("/auth/sign-in", "POST", data);
       return result;
     } catch (error) {
       console.log("Full error:", error);
