@@ -24,7 +24,7 @@ export class RefreshTokensProvider {
       throw new UnauthorizedException("Invalid refresh token. Please sign in again.");
     }
 
-    const user = await this.usersService.findOneByRefreshToken(refreshToken);
+    const user = await this.usersService.findUserByRefreshToken(refreshToken);
     if (!user) {
       throw new UnauthorizedException("Invalid refresh token. Please sign in again.");
     }
@@ -38,7 +38,7 @@ export class RefreshTokensProvider {
     const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
       await this.generateTokensProvider.generateSignInTokens(user);
 
-    await this.usersService.updateOne(user.id, { refreshToken });
+    await this.usersService.updateUser(user.id, { refreshToken });
     response.cookie(refreshTokenCookieName, newRefreshToken, refreshTokenCookieOptions);
     return { accessToken: newAccessToken };
   }

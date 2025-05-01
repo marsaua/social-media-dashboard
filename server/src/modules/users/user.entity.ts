@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Exclude } from "class-transformer";
+import { Post } from "src/modules/posts/post.entity";
 
 @Entity()
 export class User {
@@ -43,4 +44,7 @@ export class User {
   })
   @Exclude()
   refreshToken?: string | null;
+
+  @OneToMany(() => Post, (post) => post.author)
+  posts: Post[];
 }

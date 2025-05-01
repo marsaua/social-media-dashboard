@@ -12,11 +12,13 @@ import { APP_GUARD, APP_INTERCEPTOR } from "@nestjs/core";
 import { AuthGuard } from "src/modules/auth/guards/auth.guard";
 import jwtConfig from "src/modules/auth/config/jwt.config";
 import { JwtModule } from "@nestjs/jwt";
+import { PostsModule } from "./modules/posts/posts.module";
 
 @Module({
   imports: [
     UsersModule,
     AuthModule,
+    PostsModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: !ENV ? ".env" : `.env.${ENV}`,

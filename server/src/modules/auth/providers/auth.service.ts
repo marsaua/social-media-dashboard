@@ -17,7 +17,7 @@ export class AuthService {
   ) {}
 
   public async signIn(signInDto: SignInDto, response: Response) {
-    const user = await this.usersService.findOneByUsername(signInDto.username);
+    const user = await this.usersService.findUserByUsername(signInDto.username);
     if (!user) {
       throw new UnauthorizedException("Invalid credentials");
     }
@@ -28,7 +28,7 @@ export class AuthService {
     }
 
     const { accessToken, refreshToken } = await this.generateTokensProvider.generateSignInTokens(user);
-    await this.usersService.updateOne(user.id, { refreshToken });
+    await this.usersService.updateUser(user.id, { refreshToken });
     response.cookie(refreshTokenCookieName, refreshToken, refreshTokenCookieOptions);
     return { accessToken };
   }
@@ -41,8 +41,8 @@ export class AuthService {
       return { message: "No refresh token found. Signed out successfully" };
     }
 
-    const user = await this.usersService.findOneByRefreshToken(refreshToken);
-    await this.usersService.updateOne(user.id, { refreshToken: null });
+    const user = await this.usersService.findUserByRefreshToken(refreshToken);
+    await this.usersService.updateUser(user.id, { refreshToken: null });
 
     response.clearCookie(refreshTokenCookieName, refreshTokenCookieOptions);
 
