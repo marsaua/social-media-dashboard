@@ -7,6 +7,7 @@ import { JwtModule } from "@nestjs/jwt";
 import jwtConfig from "src/modules/auth/config/jwt.config";
 import { ConfigModule } from "@nestjs/config";
 import { GenerateTokensProvider } from "./providers/generate-tokens.provider";
+import { RefreshTokensProvider } from "src/modules/auth/providers/refresh-tokens.provider";
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { GenerateTokensProvider } from "./providers/generate-tokens.provider";
     JwtModule.registerAsync(jwtConfig.asProvider()),
   ],
   controllers: [AuthController],
-  providers: [AuthService, BcryptProvider, GenerateTokensProvider],
+  providers: [AuthService, BcryptProvider, GenerateTokensProvider, RefreshTokensProvider],
   exports: [AuthService, BcryptProvider],
 })
 export class AuthModule {}

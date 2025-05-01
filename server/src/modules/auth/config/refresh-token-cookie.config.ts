@@ -8,6 +8,6 @@ export const refreshTokenCookieOptions: CookieOptions = {
   httpOnly: true,
   secure: ENV === "production",
   sameSite: "lax",
-  path: `/${globalPrefix}/auth/refresh-tokens`,
+  path: `/${globalPrefix}/auth`,
   maxAge: refreshTokenTtl * 1000, // 14 days in milliseconds
 };

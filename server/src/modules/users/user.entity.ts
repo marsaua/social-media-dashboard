@@ -42,5 +42,5 @@ export class User {
     nullable: true,
   })
   @Exclude()
-  refreshToken?: string;
+  refreshToken?: string | null;
 }

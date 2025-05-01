@@ -4,6 +4,8 @@ import { User } from "src/modules/users/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CreateUserDto } from "src/modules/users/dto/create-user.dto";
 import { BcryptProvider } from "src/modules/auth/providers/bcrypt.provider";
+import { Request } from "express";
+import { REQUEST_USER_KEY } from "src/modules/auth/constants/auth.constants";
 
 @Injectable()
 export class UsersService {
@@ -16,6 +18,17 @@ export class UsersService {
 
   public async findOne(userId: number) {
     const user = await this.usersRepository.findOneBy({ id: userId });
+
+    if (!user) {
+      throw new BadRequestException("User not found");
+    }
+
+    return user;
+  }
+
+  public async getCurrent(request: Request) {
+    const userData = request[REQUEST_USER_KEY];
+    const user = await this.usersRepository.findOneBy({ id: userData?.sub });
 
     if (!user) {
       throw new BadRequestException("User not found");
@@ -52,7 +65,7 @@ export class UsersService {
     return this.usersRepository.find();
   }
 
-  public async create(createUserDto: CreateUserDto) {
+  public async createOne(createUserDto: CreateUserDto) {
     const existingUser = await this.usersRepository.findOne({
       where: { username: createUserDto.username },
     });

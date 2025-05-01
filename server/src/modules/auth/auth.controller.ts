@@ -15,6 +15,12 @@ export class AuthController {
     return this.authService.signIn(signInDto, response);
   }
 
+  @Post("sign-out")
+  @HttpCode(HttpStatus.OK)
+  public signOut(@Req() request: Request, @Res({ passthrough: true }) response: Response) {
+    return this.authService.signOut(request, response);
+  }
+
   @Post("refresh-tokens")
   @HttpCode(HttpStatus.OK)
   public refreshTokens(@Req() request: Request, @Res({ passthrough: true }) response: Response) {

@@ -6,6 +6,7 @@ import { ConfigType } from "@nestjs/config";
 import jwtConfig from "src/modules/auth/config/jwt.config";
 import { PUBLIC_ENDPOINT_KEY } from "src/modules/auth/decorators/public-endpoint.decorator";
 import { Reflector } from "@nestjs/core";
+import { REQUEST_USER_KEY } from "src/modules/auth/constants/auth.constants";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -40,7 +41,7 @@ export class AuthGuard implements CanActivate {
         this.jwtConfiguration,
       );
 
-      request["user"] = jwtPayload;
+      request[REQUEST_USER_KEY] = jwtPayload;
     } catch (error) {
       throw new UnauthorizedException("Invalid token", {
         description: error,

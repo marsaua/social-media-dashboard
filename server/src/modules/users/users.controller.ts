@@ -1,10 +1,16 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Req } from "@nestjs/common";
 import { UsersService } from "src/modules/users/providers/users.service";
 import { CreateUserDto } from "src/modules/users/dto/create-user.dto";
+import { Request } from "express";
 
 @Controller("users")
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
+  @Get("current")
+  public getCurrent(@Req() request: Request) {
+    return this.usersService.getCurrent(request);
+  }
 
   @Get(":id")
   public findOne(@Param("id") userId: number) {
@@ -17,7 +23,7 @@ export class UsersController {
   }
 
   @Post()
-  public create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  public createOne(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.createOne(createUserDto);
   }
 }
