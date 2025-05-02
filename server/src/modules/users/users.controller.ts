@@ -1,9 +1,11 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { UsersService } from "src/modules/users/providers/users.service";
 import { CreateUserDto } from "src/modules/users/dto/create-user.dto";
 import { ActiveUser } from "src/modules/auth/decorators/active-user.decorator";
 import { ActiveUserData } from "src/modules/auth/interfaces/active-user-data.interface";
 import { PostsService } from "src/modules/posts/providers/posts.service";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { UpdateUserDto } from "src/modules/users/dto/update-user.dto";
 
 @Controller("users")
 export class UsersController {
@@ -25,6 +27,16 @@ export class UsersController {
   @Get(":id")
   public findUser(@Param("id") userId: number) {
     return this.usersService.findUser(userId);
+  }
+
+  @Patch(":id")
+  @UseInterceptors(FileInterceptor("file"))
+  public updateUser(
+    @Param("id") userId: number,
+    @Body() updateUserDto: UpdateUserDto,
+    @UploadedFile() uploadedFile: Express.Multer.File,
+  ) {
+    return this.usersService.updateUser(userId, updateUserDto, uploadedFile);
   }
 
   @Get()

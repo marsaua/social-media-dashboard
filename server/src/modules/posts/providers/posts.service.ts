@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { Post } from "src/modules/posts/post.entity";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -6,6 +6,10 @@ import { CreatePostDto } from "src/modules/posts/dto/create-post.dto";
 import { UsersService } from "src/modules/users/providers/users.service";
 import { ActiveUserData } from "src/modules/auth/interfaces/active-user-data.interface";
 import { UpdatePostDto } from "src/modules/posts/dto/update-post.dto";
+import {
+  CloudinaryFolder,
+  UploadToCloudinaryProvider,
+} from "src/modules/uploads/providers/upload-to-cloudinary.provider";
 
 @Injectable()
 export class PostsService {
@@ -13,6 +17,7 @@ export class PostsService {
     @InjectRepository(Post)
     private readonly postsRepository: Repository<Post>,
     private readonly usersService: UsersService,
+    private readonly uploadToCloudinaryProvider: UploadToCloudinaryProvider,
   ) {}
 
   public async findPosts() {
@@ -45,10 +50,20 @@ export class PostsService {
     return post;
   }
 
-  public async createPost(createPostDto: CreatePostDto, username: ActiveUserData["username"]) {
+  public async createPost(
+    createPostDto: CreatePostDto,
+    uploadedFile: Express.Multer.File,
+    username: ActiveUserData["username"],
+  ) {
     const user = await this.usersService.findUserByUsername(username);
 
-    const post = this.postsRepository.create({ ...createPostDto, author: user });
+    let imageUrl: string | undefined = undefined;
+
+    if (uploadedFile) {
+      imageUrl = await this.uploadToCloudinaryProvider.upload(uploadedFile, CloudinaryFolder.POST_IMAGES);
+    }
+
+    const post = this.postsRepository.create({ ...createPostDto, author: user, imageUrl });
 
     return await this.postsRepository.save(post);
   }

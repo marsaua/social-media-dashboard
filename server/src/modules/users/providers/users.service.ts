@@ -1,10 +1,16 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { NotFoundException, Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { User } from "src/modules/users/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CreateUserDto } from "src/modules/users/dto/create-user.dto";
 import { BcryptProvider } from "src/modules/auth/providers/bcrypt.provider";
 import { ActiveUserData } from "src/modules/auth/interfaces/active-user-data.interface";
+import { UpdateUserDto } from "src/modules/users/dto/update-user.dto";
+import {
+  CloudinaryFolder,
+  UploadToCloudinaryProvider,
+} from "src/modules/uploads/providers/upload-to-cloudinary.provider";
+import { instanceToPlain } from "class-transformer";
 
 @Injectable()
 export class UsersService {
@@ -12,13 +18,14 @@ export class UsersService {
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     private readonly bcryptProvider: BcryptProvider,
+    private readonly uploadToCloudinaryProvider: UploadToCloudinaryProvider,
   ) {}
 
   public async findUser(userId: number) {
     const user = await this.usersRepository.findOneBy({ id: userId });
 
     if (!user) {
-      throw new BadRequestException("User not found");
+      throw new NotFoundException("User not found");
     }
 
     return user;
@@ -28,21 +35,40 @@ export class UsersService {
     const user = await this.usersRepository.findOneBy({ id: userId });
 
     if (!user) {
-      throw new BadRequestException("User not found");
+      throw new NotFoundException("User not found");
     }
 
     return user;
   }
 
-  public async updateUser(userId: number, data: Partial<User>) {
-    await this.usersRepository.update(userId, data);
+  public async updateUser(
+    userId: number,
+    updateUserDto: UpdateUserDto & {
+      refreshToken?: User["refreshToken"];
+    },
+    uploadedFile?: Express.Multer.File,
+  ) {
+    const user = await this.usersRepository.findOneBy({ id: userId });
+
+    if (!user) {
+      throw new NotFoundException("User not found");
+    }
+
+    let avatarUrl: string | null = null;
+    if (uploadedFile) {
+      avatarUrl = await this.uploadToCloudinaryProvider.upload(uploadedFile, CloudinaryFolder.USER_AVATARS);
+    }
+
+    const updatedUser = this.usersRepository.create({ ...user, ...updateUserDto, avatarUrl });
+
+    return await this.usersRepository.save(updatedUser);
   }
 
   public async findUserByUsername(username: string) {
     const user = await this.usersRepository.findOneBy({ username });
 
     if (!user) {
-      throw new BadRequestException("User not found");
+      throw new NotFoundException("User not found");
     }
 
     return user;
@@ -52,7 +78,7 @@ export class UsersService {
     const user = await this.usersRepository.findOneBy({ refreshToken });
 
     if (!user) {
-      throw new BadRequestException("User not found");
+      throw new NotFoundException("User not found");
     }
 
     return user;
@@ -68,7 +94,7 @@ export class UsersService {
     });
 
     if (existingUser) {
-      throw new BadRequestException("User with this username already exists");
+      throw new NotFoundException("User with this username already exists");
     }
 
     const hashedPassword = await this.bcryptProvider.hashPassword(createUserDto.password);

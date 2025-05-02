@@ -25,6 +25,13 @@ export class Post {
   })
   author: User;
 
+  @Column({
+    type: "varchar",
+    length: 1024,
+    nullable: true,
+  })
+  imageUrl: string;
+
   @CreateDateColumn()
   createdAt: Date;
 
