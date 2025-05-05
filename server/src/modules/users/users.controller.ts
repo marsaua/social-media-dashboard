@@ -19,20 +19,20 @@ export class UsersController {
     return this.usersService.getCurrentUser(userId);
   }
 
-  @Get(":id/posts")
-  public findUserPosts(@Param("id") userId: number) {
-    return this.postsService.findUserPosts(userId);
+  @Get(":userId/posts")
+  public findUserPosts(@Param("userId") userId: number) {
+    return this.postsService.findAllPostsFromUser(userId);
   }
 
-  @Get(":id")
-  public findUser(@Param("id") userId: number) {
+  @Get(":userId")
+  public findUser(@Param("userId") userId: number) {
     return this.usersService.findUser(userId);
   }
 
-  @Patch(":id")
-  @UseInterceptors(FileInterceptor("file"))
+  @Patch(":userId")
+  @UseInterceptors(FileInterceptor("avatar"))
   public updateUser(
-    @Param("id") userId: number,
+    @Param("userId") userId: number,
     @Body() updateUserDto: UpdateUserDto,
     @UploadedFile() uploadedFile: Express.Multer.File,
   ) {

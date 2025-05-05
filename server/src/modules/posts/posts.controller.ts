@@ -1,17 +1,29 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Patch,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from "@nestjs/common";
 import { PostsService } from "src/modules/posts/providers/posts.service";
 import { CreatePostDto } from "src/modules/posts/dto/create-post.dto";
 import { ActiveUser } from "src/modules/auth/decorators/active-user.decorator";
 import { ActiveUserData } from "src/modules/auth/interfaces/active-user-data.interface";
 import { UpdatePostDto } from "src/modules/posts/dto/update-post.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { CreateCommentDto } from "src/modules/comments/dto/create-comment.dto";
 
 @Controller("posts")
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor("file"))
+  @UseInterceptors(FileInterceptor("image"))
   public createPost(
     @Body() createPostDto: CreatePostDto,
     @UploadedFile() uploadedFile: Express.Multer.File,
@@ -21,22 +33,48 @@ export class PostsController {
   }
 
   @Get()
-  public findPosts() {
-    return this.postsService.findPosts();
+  public findAllPosts() {
+    return this.postsService.findAllPosts();
   }
 
-  @Get(":id")
-  public findPost(@Param("id") postId: number) {
+  @Get(":postId/comments")
+  public findCommentsOnPost(@Param("postId") postId: number) {
+    return this.postsService.findCommentsOnPost(postId);
+  }
+
+  @Post(":postId/comments")
+  public createCommentOnPost(
+    @Param("postId") postId: number,
+    @ActiveUser("sub") userId: ActiveUserData["sub"],
+    @Body() createCommentDto: CreateCommentDto,
+  ) {
+    return this.postsService.createCommentOnPost(postId, userId, createCommentDto);
+  }
+
+  @Patch(":postId/comments/:commentId")
+  public updateCommentOnPost(@Param("commentId") commentId: number, @Body() updateCommentDto: CreateCommentDto) {
+    return this.postsService.updateCommentOnPost(commentId, updateCommentDto);
+  }
+
+  @Delete(":postId/comments/:commentId")
+  @HttpCode(204)
+  public deleteCommentOnPost(@Param("commentId") commentId: number) {
+    return this.postsService.deleteCommentOnPost(commentId);
+  }
+
+  @Get(":postId")
+  public findPost(@Param("postId") postId: number) {
     return this.postsService.findPost(postId);
   }
 
-  @Patch(":id")
-  public updatePost(@Param("id") postId: number, @Body() updatePostDto: UpdatePostDto) {
+  @Patch(":postId")
+  public updatePost(@Param("postId") postId: number, @Body() updatePostDto: UpdatePostDto) {
     return this.postsService.updatePost(postId, updatePostDto);
   }
 
-  @Delete(":id")
-  public deletePost(@Param("id") postId: number) {
+  @Delete(":postId")
+  @HttpCode(204)
+  public deletePost(@Param("postId") postId: number) {
     return this.postsService.deletePost(postId);
   }
 }

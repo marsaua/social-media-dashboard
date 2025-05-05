@@ -38,6 +38,7 @@ A lightweight social media dashboard where users can track analytics from variou
 - Update local postgres version
 - Nests.js Microservices
 - Rewrite auth to passport?
+- import sorting
 
 ### APP FEATURES
 

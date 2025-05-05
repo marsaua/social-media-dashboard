@@ -1,5 +1,14 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { User } from "src/modules/users/user.entity";
+import { Comment } from "src/modules/comments/comment.entity";
 
 @Entity()
 export class Post {
@@ -20,11 +29,6 @@ export class Post {
   })
   description: string;
 
-  @ManyToOne(() => User, (user) => user.posts, {
-    eager: true,
-  })
-  author: User;
-
   @Column({
     type: "varchar",
     length: 1024,
@@ -37,4 +41,10 @@ export class Post {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ManyToOne(() => User, (user) => user.posts)
+  author: User;
+
+  @OneToMany(() => Comment, (comment) => comment.post)
+  comments: Comment[];
 }

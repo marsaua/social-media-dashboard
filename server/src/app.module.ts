@@ -15,12 +15,15 @@ import jwtConfig from "src/modules/auth/config/jwt.config";
 import { JwtModule } from "@nestjs/jwt";
 import { PostsModule } from "./modules/posts/posts.module";
 import { UploadsModule } from "./modules/uploads/uploads.module";
+import { CommentsModule } from "src/modules/comments/comments.module";
 
 @Module({
   imports: [
     UsersModule,
     AuthModule,
     PostsModule,
+    UploadsModule,
+    CommentsModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: !ENV ? ".env" : `.env.${ENV}`,
@@ -43,7 +46,6 @@ import { UploadsModule } from "./modules/uploads/uploads.module";
     }),
     ConfigModule.forFeature(jwtConfig),
     JwtModule.registerAsync(jwtConfig.asProvider()),
-    UploadsModule,
   ],
   controllers: [AppController],
   providers: [
