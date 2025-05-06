@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import { globalPrefix } from "server/src/config/app.config.ts";
 
 export default defineConfig({
   resolve: {
@@ -11,7 +12,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/api": {
+      [globalPrefix]: {
         target: "http://localhost:8080",
         changeOrigin: true,
       },
