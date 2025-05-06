@@ -17,6 +17,7 @@ import { ActiveUserData } from "src/modules/auth/interfaces/active-user-data.int
 import { UpdatePostDto } from "src/modules/posts/dto/update-post.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { CreateCommentDto } from "src/modules/comments/dto/create-comment.dto";
+import { PublicEndpoint } from "src/modules/auth/decorators/public-endpoint.decorator";
 
 @Controller("posts")
 export class PostsController {
@@ -32,6 +33,7 @@ export class PostsController {
     return this.postsService.createPost(createPostDto, uploadedFile, username);
   }
 
+  @PublicEndpoint()
   @Get()
   public findAllPosts() {
     return this.postsService.findAllPosts();

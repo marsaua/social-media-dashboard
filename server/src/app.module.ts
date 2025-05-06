@@ -5,17 +5,19 @@ import { UsersModule } from "./modules/users/users.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { AuthModule } from "./modules/auth/auth.module";
-import appConfig, { ENV } from "src/config/app.config";
-import dbConfig from "src/config/db.config";
 import cloudinaryConfig from "src/modules/uploads/config/cloudinary.config";
-import environmentValidation from "src/config/environment.validation";
 import { APP_GUARD, APP_INTERCEPTOR } from "@nestjs/core";
 import { AuthGuard } from "src/modules/auth/guards/auth.guard";
+import appConfig, { ENV } from "src/config/app.config";
+import dbConfig from "src/config/db.config";
+import environmentValidation from "src/config/environment.validation";
 import jwtConfig from "src/modules/auth/config/jwt.config";
+import mailConfig from "src/modules/mail/config/mail.config";
 import { JwtModule } from "@nestjs/jwt";
 import { PostsModule } from "./modules/posts/posts.module";
 import { UploadsModule } from "./modules/uploads/uploads.module";
 import { CommentsModule } from "src/modules/comments/comments.module";
+import { MailModule } from "src/modules/mail/mail.module";
 
 @Module({
   imports: [
@@ -24,10 +26,11 @@ import { CommentsModule } from "src/modules/comments/comments.module";
     PostsModule,
     UploadsModule,
     CommentsModule,
+    MailModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: !ENV ? ".env" : `.env.${ENV}`,
-      load: [appConfig, dbConfig, cloudinaryConfig],
+      load: [appConfig, dbConfig, cloudinaryConfig, mailConfig],
       validationSchema: environmentValidation,
     }),
     TypeOrmModule.forRootAsync({

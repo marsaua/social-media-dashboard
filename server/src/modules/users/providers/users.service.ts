@@ -1,4 +1,4 @@
-import { NotFoundException, Injectable } from "@nestjs/common";
+import { NotFoundException, Injectable, RequestTimeoutException } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { User } from "src/modules/users/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -10,7 +10,7 @@ import {
   CloudinaryFolder,
   UploadToCloudinaryProvider,
 } from "src/modules/uploads/providers/upload-to-cloudinary.provider";
-import { instanceToPlain } from "class-transformer";
+import { MailService } from "src/modules/mail/providers/mail.service";
 
 @Injectable()
 export class UsersService {
@@ -19,6 +19,7 @@ export class UsersService {
     private readonly usersRepository: Repository<User>,
     private readonly bcryptProvider: BcryptProvider,
     private readonly uploadToCloudinaryProvider: UploadToCloudinaryProvider,
+    private readonly mailService: MailService,
   ) {}
 
   public async findUser(userId: number) {
@@ -99,6 +100,12 @@ export class UsersService {
 
     const hashedPassword = await this.bcryptProvider.hashPassword(createUserDto.password);
     const newUser = this.usersRepository.create({ ...createUserDto, password: hashedPassword });
+
+    try {
+      await this.mailService.sendUserWelcome(newUser);
+    } catch (error) {
+      throw new RequestTimeoutException(error);
+    }
 
     return this.usersRepository.save(newUser);
   }

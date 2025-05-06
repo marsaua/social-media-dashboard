@@ -6,6 +6,7 @@ import { ActiveUserData } from "src/modules/auth/interfaces/active-user-data.int
 import { PostsService } from "src/modules/posts/providers/posts.service";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { UpdateUserDto } from "src/modules/users/dto/update-user.dto";
+import { PublicEndpoint } from "src/modules/auth/decorators/public-endpoint.decorator";
 
 @Controller("users")
 export class UsersController {
@@ -45,6 +46,7 @@ export class UsersController {
   }
 
   @Post()
+  @PublicEndpoint()
   public createUser(@Body() createUserDto: CreateUserDto) {
     return this.usersService.createUser(createUserDto);
   }
