@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# dotenv environment variable files
+.env
+.env.development
+.env.production
+.env.test
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,9 +28,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-*.env
 node_modules/
 dist/
-.env
 .pnpm-store/
 *.yaml
+!/server/docs/**/*.yaml
