@@ -4,7 +4,7 @@ export const formatAmount = (amount: number) => {
 
 export const fetchData = async <T>(
   endpoint: string,
-  method = "GET",
+  method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
   body?: any,
   headers: Record<string, string> = {},
   credentials = true,
@@ -17,9 +17,10 @@ export const fetchData = async <T>(
     },
   };
 
-  if (body) {
+  if (method !== "GET" && body !== undefined) {
     options.body = JSON.stringify(body);
   }
+
   if (credentials) {
     options.credentials = "include";
   }

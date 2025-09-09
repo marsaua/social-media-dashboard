@@ -1,6 +1,7 @@
 import { AppRouters } from "./AppRouters.tsx";
 import { ThemeProviderWrapper } from "./store/ThemeProvider.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function App() {
   const queryClient = new QueryClient();
@@ -9,6 +10,7 @@ function App() {
       <ThemeProviderWrapper>
         <AppRouters />
       </ThemeProviderWrapper>
+      <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>
   );
 }

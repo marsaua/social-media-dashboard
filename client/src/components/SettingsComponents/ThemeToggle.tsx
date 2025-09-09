@@ -1,7 +1,8 @@
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
-import { ThemeContextType, useTheme } from "@/store/ThemeProvider.tsx";
+import { useTheme } from "@/store/ThemeProvider.tsx";
+import type { ThemeContextType } from "@/store/ThemeProvider.tsx";
 
 export const ThemeToggle = () => {
   const { themeMode, toggleTheme }: ThemeContextType = useTheme();
@@ -11,13 +12,9 @@ export const ThemeToggle = () => {
       <Switch
         checked={themeMode === "dark"}
         onChange={toggleTheme}
-        aria-label={
-          themeMode === "dark" ? "Switch to Dark Mode" : "Switch to Light Mode"
-        }
+        aria-label={themeMode === "dark" ? "Switch to Dark Mode" : "Switch to Light Mode"}
       />
-      <Typography>
-        {themeMode === "dark" ? "Dark Mode" : "Light Mode"}
-      </Typography>
+      <Typography>{themeMode === "dark" ? "Dark Mode" : "Light Mode"}</Typography>
     </Stack>
   );
 };

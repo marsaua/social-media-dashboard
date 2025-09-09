@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { LogInData } from "@/store/types";
+import type { LogInData } from "@/store/types";
 import { fetchData } from "./helpers";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./useAuth";

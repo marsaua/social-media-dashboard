@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Form, Formik } from "formik";
-import { LogInData } from "@/store/types";
+import type { LogInData } from "@/store/types";
 import Button from "@mui/material/Button";
 import { useLogInForm } from "@/store/useAutherization";
 import { InputItem } from "@/components/InputItem";

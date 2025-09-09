@@ -1,4 +1,6 @@
-import { ResponsiveBar, ComputedDatum } from "@nivo/bar";
+import type { ComputedDatum } from "@nivo/bar";
+import { ResponsiveBar } from "@nivo/bar";
+
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 
@@ -95,7 +97,9 @@ type Props = {
 export const Diagram: React.FC<Props> = ({ value }) => {
   const [selectedBar, setSelectedBar] = useState<string | null>("Apr");
   const theme = useTheme();
-  const handleChange = (bar: ComputedDatum<{ month: string; Followers: number; Following: number; Likes: number; Comments: number }>) => {
+  const handleChange = (
+    bar: ComputedDatum<{ month: string; Followers: number; Following: number; Likes: number; Comments: number }>,
+  ) => {
     setSelectedBar(bar.indexValue as string);
   };
   return (
@@ -114,11 +118,7 @@ export const Diagram: React.FC<Props> = ({ value }) => {
       axisRight={null}
       animate={true}
       tooltip={() => null}
-      colors={(bar) =>
-        bar.indexValue === selectedBar
-          ? theme.palette.primary.main
-          : theme.palette.text.secondary
-      }
+      colors={(bar) => (bar.indexValue === selectedBar ? theme.palette.primary.main : theme.palette.text.secondary)}
       fill={[
         {
           match: { indexValue: selectedBar },
@@ -176,9 +176,7 @@ export const Diagram: React.FC<Props> = ({ value }) => {
       }}
       role="application"
       ariaLabel="Statistic"
-      barAriaLabel={(e) =>
-        e.id + ": " + e.formattedValue + " in month: " + e.indexValue
-      }
+      barAriaLabel={(e) => `${e.id}: ${e.formattedValue} in month: ${e.indexValue}`}
     />
   );
 };

@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { RegisterData } from "@/store/types";
+import type { RegisterData } from "@/store/types";
 import { fetchData } from "./helpers";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./useAuth";
@@ -21,8 +21,6 @@ export const useRegistration = () => {
     mutationFn: registerUser,
     onSuccess: (data) => {
       setAuth({ accessToken: data.accessToken });
-      console.log(data);
-
       navigate("/home");
     },
   });
@@ -45,7 +43,6 @@ export const useRegisterForm = () => {
 
   const handleSubmit = (values: RegisterData) => {
     mutate(values);
-    console.log(values);
   };
 
   return {
