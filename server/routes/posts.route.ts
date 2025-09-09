@@ -11,10 +11,6 @@ const router = express.Router();
 
 router.post("/", handlePostImageUpload, createPost);
 router.get("/user/:userId", getPosts);
-router
-  .route("/:postId")
-  .get(getPost)
-  .patch(handlePostImageUpload, updatePost)
-  .delete(deletePost);
+router.route("/:postId").get(getPost).patch(handlePostImageUpload, updatePost).delete(deletePost);
 
 export default router;

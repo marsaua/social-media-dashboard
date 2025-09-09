@@ -2,8 +2,8 @@ import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { formatAmount } from "@/store/helpers.ts";
-import { StatisticCardT } from "@/helpers/types.ts";
+import { formatAmount } from "@/store/helpers";
+import type { StatisticCardT } from "@/helpers/types";
 
 type Props = { card: StatisticCardT };
 
@@ -34,9 +34,7 @@ export const WeekSatisticCard: React.FC<Props> = ({ card }) => {
         <Box component="img" src={icon} sx={{ height: "50px" }}></Box>
       </Box>
       <Box>
-        <Typography sx={{ fontSize: "24px", fontWeight: "bold" }}>
-          {formatAmount(amount)}
-        </Typography>
+        <Typography sx={{ fontSize: "24px", fontWeight: "bold" }}>{formatAmount(amount)}</Typography>
         <Typography>{name}</Typography>
       </Box>
     </Card>

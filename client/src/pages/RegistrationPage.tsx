@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Form, Formik } from "formik";
 import { useRegisterForm } from "@/store/useRegisterForm";
-import { RegisterData } from "@/store/types";
+import type { RegisterData } from "@/store/types";
 import Button from "@mui/material/Button";
 import { InputItem } from "@/components/InputItem";
 

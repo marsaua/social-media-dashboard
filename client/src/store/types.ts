@@ -1,10 +1,11 @@
 export type User = {
   username: string;
-  password: string;
+  password?: string;
   firstName?: string;
   lastName?: string;
   avatar?: string;
   accessToken?: string;
+  _id: string;
 };
 
 export type Auth = {
@@ -26,4 +27,9 @@ export type RegisterData = {
   firstName: string;
   lastName?: string;
   avatar?: string;
+};
+export type Post = {
+  description: string;
+  title: string;
+  image?: File | null;
 };
